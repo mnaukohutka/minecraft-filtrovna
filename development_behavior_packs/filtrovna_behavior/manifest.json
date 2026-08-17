@@ -2,22 +2,22 @@
   "format_version": 2,
   "header": {
     "name": "Filtrovna Behavior Pack",
-    "description": "Inteligentní třídicí systém s mini copper golemy",
-    "uuid": "SEM-DEJ-UUID-HEADERU",
+    "description": "Inteligentní třídicí blok s měděným golemem",
+    "uuid": "3c549ccc-b769-4139-bea7-c2e8b3eb13d8",
     "version": [1, 0, 0],
     "min_engine_version": [1, 21, 0]
   },
   "modules": [
     {
       "type": "data",
-      "uuid": "SEM-DEJ-UUID-DATOVEHO-MODULU",
+      "uuid": "2a749142-57c5-4b65-967b-de42c56cb3d6",
       "version": [1, 0, 0]
     },
     {
       "type": "script",
       "language": "javascript",
       "entry": "scripts/main.js",
-      "uuid": "SEM-DEJ-UUID-SCRIPT-MODULU",
+      "uuid": "89eda2f6-9da2-45d4-96ca-fb775afc1965",
       "version": [1, 0, 0]
     }
   ],
