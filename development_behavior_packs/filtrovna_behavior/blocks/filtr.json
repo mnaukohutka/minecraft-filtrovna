@@ -4,7 +4,7 @@
     "description": {
       "identifier": "filtrovna:filtr",
       "menu_category": {
-        "category": "itemsToBlocks",
+        "category": "construction",
         "group": "itemGroup.name.redstone"
       }
     },
