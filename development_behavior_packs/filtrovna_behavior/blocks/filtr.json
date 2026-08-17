@@ -1,0 +1,78 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:block": {
+    "description": {
+      "identifier": "filtrovna:filtr",
+      "menu_category": {
+        "category": "itemsToBlocks",
+        "group": "itemGroup.name.redstone"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.filtrovna_filtr",
+      "minecraft:material_instances": {
+        "texture": "waxed_copper_block",
+        "render_method": "opaque",
+        "top": {
+          "texture": "filtr_top_grate",
+          "render_method": "opaque"
+        },
+        "bottom": {
+          "texture": "filtr_bottom_bulb",
+          "render_method": "opaque",
+          "face_dimming": false
+        },
+        "left": {
+          "texture": "filtr_side_plus",
+          "render_method": "opaque"
+        },
+        "right": {
+          "texture": "filtr_side_minus",
+          "render_method": "opaque"
+        },
+        "back": {
+          "texture": "filtr_back_grate",
+          "render_method": "opaque"
+        },
+        "front_glass": {
+          "texture": "filtr_front_glass",
+          "render_method": "blend",
+          "face_dimming": false,
+          "ambient_occlusion": false
+        },
+        "front_bulb": {
+          "texture": "filtr_front_bulb_green",
+          "render_method": "opaque",
+          "face_dimming": false
+        }
+      },
+      "minecraft:collision_box": true,
+      "minecraft:selection_box": true,
+      "minecraft:destructible_by_mining": { "seconds_to_destroy": 3.5 },
+      "minecraft:destructible_by_explosion": { "explosion_resistance": 6.0 },
+      "minecraft:friction": 0.4,
+      "minecraft:map_color": "B87333",
+      "minecraft:light_emission": { "emission": 8 },
+      "minecraft:tick": {
+        "interval_range": [1, 1]
+      },
+      "minecraft:custom_components": {
+        "filtrovna:tick_handler": {}
+      }
+    },
+    "permutations": [
+      {
+        "condition": "query.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": { "rotation": [0, 0, 0] }
+        }
+      },
+      {
+        "condition": "query.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": { "rotation": [0, 90, 0] }
+        }
+      }
+    ]
+  }
+}
