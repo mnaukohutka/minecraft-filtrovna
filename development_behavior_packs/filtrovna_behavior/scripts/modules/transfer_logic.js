@@ -104,19 +104,7 @@ export function tryDrop(sourceBlock, item, direction) {
     z: targetPos.z + 0.5
   };
 
-  const entity = sourceBlock.dimension.spawnEntity(
-    "minecraft:item",
-    spawnPosition
-  );
-
-  const itemComponent = entity.getComponent("minecraft:item");
-
-  if (!itemComponent) {
-    entity.remove();
-    return false;
-  }
-
-  itemComponent.itemStack = item.clone();
+  sourceBlock.dimension.spawnItem(item.clone(), spawnPosition);
 
   return true;
 }

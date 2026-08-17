@@ -1,4 +1,4 @@
-import { system } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 import { getBlockContainer } from "./inventory_manager.js";
 import { tryTransfer, tryDrop } from "./transfer_logic.js";
 import { getRegisteredFilters } from "./filter_registry.js";
@@ -6,16 +6,16 @@ import { getRegisteredFilters } from "./filter_registry.js";
 const PROCESSING = new Set();
 const PROCESSING_TICKS = 21;
 
+const DIMENSIONS = [
+  "overworld",
+  "nether",
+  "the_end"
+];
+
 export function registerTickHandler() {
   system.runInterval(() => {
-    const dimensions = [
-      "overworld",
-      "nether",
-      "the_end"
-    ];
-
-    for (const dimensionId of dimensions) {
-      const dimension = system.getDimension(dimensionId);
+    for (const dimensionId of DIMENSIONS) {
+      const dimension = world.getDimension(dimensionId);
       const filters = getRegisteredFilters(dimension);
 
       for (const block of filters) {
@@ -79,7 +79,8 @@ function processFilter(block) {
 function finishProcessing(block, container, sourceSlot, item) {
   const filterItems = [];
 
-  for (let slot = 9; slot <= 18; slot++) {
+  // Sloty 9-17 (9 filtr-slotu), 18+ jsou vystup.
+  for (let slot = 9; slot < 18; slot++) {
     const filterItem = container.getItem(slot);
 
     if (filterItem) {

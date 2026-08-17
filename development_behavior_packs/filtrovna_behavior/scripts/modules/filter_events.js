@@ -8,11 +8,13 @@ import {
   removeInventoryForBlock
 } from "./inventory_manager.js";
 
+const FILTER_TYPE_ID = "filtrovna:filtr";
+
 export function registerFilterEvents() {
   world.afterEvents.playerPlaceBlock.subscribe((event) => {
     const block = event.block;
 
-    if (block.typeId !== "filtrovna:filtr") {
+    if (block.typeId !== FILTER_TYPE_ID) {
       return;
     }
 
@@ -20,10 +22,11 @@ export function registerFilterEvents() {
     ensureInventoryForBlock(block);
   });
 
+  // event.block je po rozbiti vzduch, proto cteme brokenBlockPermutation.
   world.afterEvents.playerBreakBlock.subscribe((event) => {
-    const block = event.block;
+    const { block, brokenBlockPermutation } = event;
 
-    if (block.typeId !== "filtrovna:filtr") {
+    if (brokenBlockPermutation.type.id !== FILTER_TYPE_ID) {
       return;
     }
 
