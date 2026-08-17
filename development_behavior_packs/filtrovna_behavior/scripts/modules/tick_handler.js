@@ -1,72 +1,104 @@
-import { world } from "@minecraft/server";
+import { system } from "@minecraft/server";
 import { getBlockContainer } from "./inventory_manager.js";
 import { tryTransfer, tryDrop } from "./transfer_logic.js";
+import { getRegisteredFilters } from "./filter_registry.js";
 
-const PROCESSING_BLOCKS = new Set();
+const PROCESSING = new Set();
+const PROCESSING_TICKS = 21;
 
-export function registerTickHandler(system, worldRef) {
+export function registerTickHandler() {
   system.runInterval(() => {
-    const overworld = worldRef.getDimension("overworld");
-    const blocks = overworld.getBlocks({ type: "filtrovna:filtr", maxBlocks: 1000 });
-    for (const block of blocks) {
-      if (PROCESSING_BLOCKS.has(block)) continue;
-      processBlock(block);
+    const dimensions = [
+      "overworld",
+      "nether",
+      "the_end"
+    ];
+
+    for (const dimensionId of dimensions) {
+      const dimension = system.getDimension(dimensionId);
+      const filters = getRegisteredFilters(dimension);
+
+      for (const block of filters) {
+        if (PROCESSING.has(makeKey(block))) {
+          continue;
+        }
+
+        processFilter(block);
+      }
     }
   }, 1);
 }
 
-function processBlock(block) {
-  const container = getBlockContainer(block);
-  if (!container) return;
+function makeKey(block) {
+  return [
+    block.dimension.id,
+    block.location.x,
+    block.location.y,
+    block.location.z
+  ].join("|");
+}
 
-  let itemToProcess = null;
+function processFilter(block) {
+  const container = getBlockContainer(block);
+
+  if (!container) {
+    return;
+  }
+
   let sourceSlot = -1;
-  for (let i = 0; i < 9; i++) {
-    const item = container.getItem(i);
+  let sourceItem;
+
+  for (let slot = 0; slot < 9; slot++) {
+    const item = container.getItem(slot);
+
     if (item) {
-      itemToProcess = item;
-      sourceSlot = i;
+      sourceSlot = slot;
+      sourceItem = item;
       break;
     }
   }
 
-  if (!itemToProcess) {
+  if (!sourceItem) {
     return;
   }
 
-  PROCESSING_BLOCKS.add(block);
-
-  // Zde by se spustila animace "inspect"
+  const key = makeKey(block);
+  PROCESSING.add(key);
 
   system.runTimeout(() => {
-    finishProcessing(block, itemToProcess, sourceSlot, container);
-    PROCESSING_BLOCKS.delete(block);
-  }, 21);
+    try {
+      finishProcessing(block, container, sourceSlot, sourceItem);
+    } catch (error) {
+      console.warn(`[Filtrovna] Chyba při zpracování: ${error}`);
+    } finally {
+      PROCESSING.delete(key);
+    }
+  }, PROCESSING_TICKS);
 }
 
-function finishProcessing(block, item, sourceSlot, container) {
-  const filterSlots = [];
-  for (let i = 9; i < 19; i++) {
-    const filterItem = container.getItem(i);
-    if (filterItem) filterSlots.push(filterItem.typeId);
+function finishProcessing(block, container, sourceSlot, item) {
+  const filterItems = [];
+
+  for (let slot = 9; slot <= 18; slot++) {
+    const filterItem = container.getItem(slot);
+
+    if (filterItem) {
+      filterItems.push(filterItem.typeId);
+    }
   }
 
-  const isMatch = filterSlots.length === 0 || filterSlots.includes(item.typeId);
-  const targetDir = isMatch ? "down" : "right";
+  const matches =
+    filterItems.length === 0 ||
+    filterItems.includes(item.typeId);
 
-  const transferSuccess = tryTransfer(block, item, targetDir);
-  if (transferSuccess) {
+  const direction = matches ? "down" : "right";
+
+  if (tryTransfer(block, item, direction)) {
     container.setItem(sourceSlot, undefined);
-    // animace sortmatch / sortne
     return;
   }
 
-  const dropSuccess = tryDrop(block, item, targetDir);
-  if (dropSuccess) {
+  if (tryDrop(block, item, direction)) {
     container.setItem(sourceSlot, undefined);
-    // animace drop
-    return;
   }
-
-  // animace stuck
 }
