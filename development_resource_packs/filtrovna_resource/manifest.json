@@ -2,15 +2,21 @@
   "format_version": 2,
   "header": {
     "name": "Filtrovna Resource Pack",
-    "description": "Resource pack pro Filtrovna blok",
-    "uuid": "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA",
+    "description": "Modely, textury a animace pro Filtrovnu",
+    "uuid": "SEM-DEJ-JINE-UUID-HEADERU",
     "version": [1, 0, 0],
     "min_engine_version": [1, 21, 0]
   },
   "modules": [
     {
       "type": "resources",
-      "uuid": "BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB",
+      "uuid": "SEM-DEJ-JINE-UUID-MODULU",
+      "version": [1, 0, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "UUID-HEADERU-BEHAVIOR-PACKU",
       "version": [1, 0, 0]
     }
   ]
