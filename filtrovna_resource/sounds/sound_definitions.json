@@ -1,0 +1,247 @@
+{
+  "format_version": "1.21.0",
+  "sound_definitions": {
+    "filtrovna.inspect": {
+      "category": "block",
+      "sounds": [
+        { "name": "note.iron_xylophone", "volume": 0.6, "pitch": 1.0 }
+      ]
+    },
+    "filtrovna.sort_match": {
+      "category": "block",
+      "sounds": [
+        { "name": "copper_bulb.turn_on", "volume": 0.7, "pitch": 1.2 }
+      ]
+    },
+    "filtrovna.sort_ne": {
+      "category": "block",
+      "sounds": [
+        { "name": "copper_bulb.turn_off", "volume": 0.7, "pitch": 0.8 }
+      ]
+    },
+    "filtrovna.drop": {
+      "category": "block",
+      "sounds": [
+        { "name": "block.dispenser.dispense", "volume": 0.7, "pitch": 1.0 }
+      ]
+    },
+    "filtrovna.stuck": {
+      "category": "block",
+      "sounds": [
+        { "name": "note.bass", "volume": 0.7, "pitch": 0.8 }
+      ]
+    },
+    "filtrovna.ui_open": {
+      "category": "block",
+      "sounds": [
+        { "name": "block.chest.open", "volume": 0.5, "pitch": 1.0 }
+      ]
+    },
+    "filtrovna.ui_close": {
+      "category": "block",
+      "sounds": [
+        { "name": "block.chest.close", "volume": 0.5, "pitch": 1.0 }
+      ]
+    },
+    "filtrovna.golem.deposit": {
+      "category": "neutral",
+      "sounds": [
+        { "name": "mob.copper_golem.chest_interaction.put_item", "volume": 0.5, "pitch": 1.2 }
+      ]
+    },
+    "filtrovna.golem.collect": {
+      "category": "neutral",
+      "sounds": [
+        { "name": "mob.copper_golem.chest_interaction.take_item", "volume": 0.5, "pitch": 1.1 }
+      ]
+    },
+    "filtrovna.golem.fail": {
+      "category": "neutral",
+      "sounds": [
+        { "name": "mob.copper_golem.chest_interaction.put_item_fail", "volume": 0.5, "pitch": 1.0 }
+      ]
+    },
+    "mob.copper_golem.step": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/mob/copper_golem/regular/step1",
+        "sounds/mob/copper_golem/regular/step2",
+        "sounds/mob/copper_golem/regular/step3",
+        "sounds/mob/copper_golem/regular/step4",
+        "sounds/mob/copper_golem/regular/step5",
+        "sounds/mob/copper_golem/regular/step6",
+        "sounds/mob/copper_golem/regular/step7",
+        "sounds/mob/copper_golem/regular/step8",
+        "sounds/mob/copper_golem/regular/step9"
+      ]
+    },
+    "mob.copper_golem.weathered.step": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/mob/copper_golem/weathered/step1",
+        "sounds/mob/copper_golem/weathered/step2",
+        "sounds/mob/copper_golem/weathered/step3",
+        "sounds/mob/copper_golem/weathered/step4",
+        "sounds/mob/copper_golem/weathered/step5",
+        "sounds/mob/copper_golem/weathered/step6",
+        "sounds/mob/copper_golem/weathered/step7",
+        "sounds/mob/copper_golem/weathered/step8",
+        "sounds/mob/copper_golem/weathered/step9"
+      ]
+    },
+    "mob.copper_golem.oxidized.step": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/mob/copper_golem/oxidized/step1",
+        "sounds/mob/copper_golem/oxidized/step2",
+        "sounds/mob/copper_golem/oxidized/step3",
+        "sounds/mob/copper_golem/oxidized/step4",
+        "sounds/mob/copper_golem/oxidized/step5",
+        "sounds/mob/copper_golem/oxidized/step6",
+        "sounds/mob/copper_golem/oxidized/step7",
+        "sounds/mob/copper_golem/oxidized/step8",
+        "sounds/mob/copper_golem/oxidized/step9"
+      ]
+    },
+    "mob.copper_golem.hurt": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/mob/copper_golem/regular/hurt1",
+        "sounds/mob/copper_golem/regular/hurt2",
+        "sounds/mob/copper_golem/regular/hurt3",
+        "sounds/mob/copper_golem/regular/hurt4"
+      ]
+    },
+    "mob.copper_golem.weathered.hurt": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/mob/copper_golem/weathered/hurt1",
+        "sounds/mob/copper_golem/weathered/hurt2",
+        "sounds/mob/copper_golem/weathered/hurt3",
+        "sounds/mob/copper_golem/weathered/hurt4"
+      ]
+    },
+    "mob.copper_golem.oxidized.hurt": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/mob/copper_golem/oxidized/hurt1",
+        "sounds/mob/copper_golem/oxidized/hurt2",
+        "sounds/mob/copper_golem/oxidized/hurt3",
+        "sounds/mob/copper_golem/oxidized/hurt4"
+      ]
+    },
+    "mob.copper_golem.death": {
+      "category": "neutral",
+      "sounds": ["sounds/mob/copper_golem/regular/death"]
+    },
+    "mob.copper_golem.weathered.death": {
+      "category": "neutral",
+      "sounds": ["sounds/mob/copper_golem/weathered/death"]
+    },
+    "mob.copper_golem.oxidized.death": {
+      "category": "neutral",
+      "sounds": ["sounds/mob/copper_golem/oxidized/death"]
+    },
+    "mob.copper_golem.look": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/mob/copper_golem/regular/look1",
+        "sounds/mob/copper_golem/regular/look2",
+        "sounds/mob/copper_golem/regular/look3",
+        "sounds/mob/copper_golem/regular/look4",
+        "sounds/mob/copper_golem/regular/look5",
+        "sounds/mob/copper_golem/regular/look6",
+        "sounds/mob/copper_golem/regular/look7"
+      ]
+    },
+    "mob.copper_golem.weathered.look": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/mob/copper_golem/weathered/look1",
+        "sounds/mob/copper_golem/weathered/look2",
+        "sounds/mob/copper_golem/weathered/look3",
+        "sounds/mob/copper_golem/weathered/look4",
+        "sounds/mob/copper_golem/weathered/look5",
+        "sounds/mob/copper_golem/weathered/look6",
+        "sounds/mob/copper_golem/weathered/look7"
+      ]
+    },
+    "mob.copper_golem.oxidized.look": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/mob/copper_golem/oxidized/look1",
+        "sounds/mob/copper_golem/oxidized/look2",
+        "sounds/mob/copper_golem/oxidized/look3",
+        "sounds/mob/copper_golem/oxidized/look4",
+        "sounds/mob/copper_golem/oxidized/look5",
+        "sounds/mob/copper_golem/oxidized/look6",
+        "sounds/mob/copper_golem/oxidized/look7"
+      ]
+    },
+    "mob.copper_golem.spin": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/mob/copper_golem/regular/spin1",
+        "sounds/mob/copper_golem/regular/spin2",
+        "sounds/mob/copper_golem/regular/spin3",
+        "sounds/mob/copper_golem/regular/spin4",
+        "sounds/mob/copper_golem/regular/spin5",
+        "sounds/mob/copper_golem/regular/spin6",
+        "sounds/mob/copper_golem/regular/spin7"
+      ]
+    },
+    "mob.copper_golem.weathered.spin": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/mob/copper_golem/weathered/spin1",
+        "sounds/mob/copper_golem/weathered/spin2",
+        "sounds/mob/copper_golem/weathered/spin3",
+        "sounds/mob/copper_golem/weathered/spin4",
+        "sounds/mob/copper_golem/weathered/spin5",
+        "sounds/mob/copper_golem/weathered/spin6",
+        "sounds/mob/copper_golem/weathered/spin7"
+      ]
+    },
+    "mob.copper_golem.oxidized.spin": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/mob/copper_golem/oxidized/spin1",
+        "sounds/mob/copper_golem/oxidized/spin2",
+        "sounds/mob/copper_golem/oxidized/spin3",
+        "sounds/mob/copper_golem/oxidized/spin4",
+        "sounds/mob/copper_golem/oxidized/spin5",
+        "sounds/mob/copper_golem/oxidized/spin6",
+        "sounds/mob/copper_golem/oxidized/spin7"
+      ]
+    },
+    "mob.copper_golem.spawn": {
+      "category": "neutral",
+      "sounds": ["sounds/mob/copper_golem/regular/spawn"]
+    },
+    "mob.copper_golem.become_statue": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/mob/copper_golem/regular/become_statue1",
+        "sounds/mob/copper_golem/regular/become_statue2",
+        "sounds/mob/copper_golem/regular/become_statue3",
+        "sounds/mob/copper_golem/regular/become_statue4"
+      ]
+    },
+    "mob.copper_golem.chest_interaction.put_item": {
+      "category": "neutral",
+      "sounds": ["sounds/mob/copper_golem/chest_interaction/put_item"]
+    },
+    "mob.copper_golem.chest_interaction.put_item_fail": {
+      "category": "neutral",
+      "sounds": ["sounds/mob/copper_golem/chest_interaction/put_item_fail"]
+    },
+    "mob.copper_golem.chest_interaction.take_item": {
+      "category": "neutral",
+      "sounds": ["sounds/mob/copper_golem/chest_interaction/take_item"]
+    },
+    "mob.copper_golem.chest_interaction.take_item_fail": {
+      "category": "neutral",
+      "sounds": ["sounds/mob/copper_golem/chest_interaction/take_item_fail"]
+    }
+  }
+}

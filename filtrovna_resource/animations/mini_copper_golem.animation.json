@@ -1,0 +1,223 @@
+{
+  "format_version": "1.21.0",
+  "animations": {
+    "animation.mini_copper_golem.idle": {
+      "loop": true,
+      "animation_length": 4,
+      "bones": {
+        "head": {
+          "rotation": [
+            "math.sin(query.anim_time * 30) * 3",
+            "math.sin(query.anim_time * 20) * 10",
+            0
+          ]
+        },
+        "body": {
+          "position": [0, "math.sin(query.anim_time * 40) * 0.05", 0]
+        },
+        "left_arm": {
+          "rotation": ["math.sin(query.anim_time * 25) * 5", 0, 0]
+        },
+        "right_arm": {
+          "rotation": ["math.sin(query.anim_time * 25 + 180) * 5", 0, 0]
+        },
+        "eyes": {
+          "scale": [
+            1,
+            "query.anim_time % 3 > 2.9 ? 0.1 : 1.0",
+            1
+          ]
+        }
+      }
+    },
+    "animation.mini_copper_golem.walk": {
+      "loop": true,
+      "animation_length": 1,
+      "bones": {
+        "left_leg": {
+          "rotation": ["math.sin(query.anim_time * 360) * 30", 0, 0]
+        },
+        "right_leg": {
+          "rotation": ["math.sin(query.anim_time * 360 + 180) * 30", 0, 0]
+        },
+        "left_arm": {
+          "rotation": ["math.sin(query.anim_time * 360 + 180) * 25", 0, 0]
+        },
+        "right_arm": {
+          "rotation": ["math.sin(query.anim_time * 360) * 25", 0, 0]
+        },
+        "body": {
+          "rotation": ["math.sin(query.anim_time * 360) * 2", 0, 0]
+        },
+        "head": {
+          "rotation": ["math.sin(query.anim_time * 360) * 3", 0, 0]
+        }
+      }
+    },
+    "animation.mini_copper_golem.inspect": {
+      "loop": false,
+      "animation_length": 1.05,
+      "bones": {
+        "right_arm": {
+          "rotation": {
+            "0.0": [0, 0, 0],
+            "0.25": [-45, 0, 0],
+            "0.75": [-45, 0, 0],
+            "1.0": [0, 0, 0]
+          }
+        },
+        "head": {
+          "rotation": {
+            "0.0": [0, 0, 0],
+            "0.25": [-30, 0, 0],
+            "0.5": [-10, -30, 0],
+            "0.75": [-10, -30, 0],
+            "1.0": [0, 0, 0]
+          }
+        },
+        "eyes": {
+          "scale": [1, "query.anim_time > 0.3 && query.anim_time < 0.75 ? 1.2 : 1.0", 1]
+        }
+      }
+    },
+    "animation.mini_copper_golem.sort_match": {
+      "loop": false,
+      "animation_length": 0.5,
+      "bones": {
+        "head": {
+          "rotation": {
+            "0.0": [0, 0, 0],
+            "0.15": [-15, 0, 0],
+            "0.35": [-15, 0, 0],
+            "0.5": [0, 0, 0]
+          }
+        },
+        "left_arm": {
+          "rotation": {
+            "0.0": [0, 0, 0],
+            "0.15": [-60, 0, 0],
+            "0.35": [-60, 0, 0],
+            "0.4": [30, 0, 0],
+            "0.5": [0, 0, 0]
+          }
+        },
+        "right_arm": {
+          "rotation": {
+            "0.0": [0, 0, 0],
+            "0.15": [-60, 0, 0],
+            "0.35": [-60, 0, 0],
+            "0.4": [30, 0, 0],
+            "0.5": [0, 0, 0]
+          }
+        },
+        "body": {
+          "position": {
+            "0.0": [0, 0, 0],
+            "0.2": [0, 0, -0.05],
+            "0.5": [0, 0, 0]
+          }
+        }
+      }
+    },
+    "animation.mini_copper_golem.sort_ne": {
+      "loop": false,
+      "animation_length": 0.5,
+      "bones": {
+        "head": {
+          "rotation": {
+            "0.0": [0, 0, 0],
+            "0.2": [10, 0, 0],
+            "0.35": [10, 0, 0],
+            "0.5": [0, 0, 0]
+          }
+        },
+        "left_arm": {
+          "rotation": {
+            "0.0": [0, 0, 0],
+            "0.2": [-20, 0, 15],
+            "0.35": [-20, -45, 15],
+            "0.5": [0, 0, 0]
+          }
+        },
+        "right_arm": {
+          "rotation": {
+            "0.0": [0, 0, 0],
+            "0.2": [-20, 0, -15],
+            "0.35": [-20, 0, -15],
+            "0.5": [0, 0, 0]
+          }
+        },
+        "body": {
+          "position": {
+            "0.0": [0, 0, 0],
+            "0.25": [0.03, 0, 0],
+            "0.5": [0, 0, 0]
+          }
+        }
+      }
+    },
+    "animation.mini_copper_golem.drop": {
+      "loop": false,
+      "animation_length": 0.25,
+      "bones": {
+        "right_arm": {
+          "rotation": {
+            "0.0": [-30, 0, 0],
+            "0.1": [-30, 0, 0],
+            "0.25": [60, 0, 0]
+          }
+        },
+        "body": {
+          "rotation": {
+            "0.0": [0, 0, 0],
+            "0.1": [10, 0, 0],
+            "0.25": [0, 0, 0]
+          }
+        }
+      }
+    },
+    "animation.mini_copper_golem.stuck": {
+      "loop": true,
+      "animation_length": 1,
+      "bones": {
+        "head": {
+          "rotation": [
+            "math.sin(query.anim_time * 360) * 10",
+            "math.sin(query.anim_time * 480) * 20",
+            0
+          ]
+        },
+        "left_arm": {
+          "rotation": ["-90 + math.sin(query.anim_time * 600) * 10", 0, 0]
+        },
+        "right_arm": {
+          "rotation": ["-90 + math.sin(query.anim_time * 600 + 180) * 10", 0, 0]
+        },
+        "body": {
+          "position": [0, "math.sin(query.anim_time * 720) * 0.03", 0]
+        }
+      }
+    },
+    "animation.mini_copper_golem.deposit": {
+      "loop": false,
+      "animation_length": 0.8,
+      "bones": {
+        "right_arm": {
+          "rotation": {
+            "0.0": [0, 0, 0],
+            "0.2": [-80, 0, 0],
+            "0.5": [-80, 0, 0],
+            "0.8": [0, 0, 0]
+          }
+        },
+        "body": {
+          "rotation": {
+            "0.0": [0, 0, 0],
+            "0.2": [15, 0, 0],
+            "0.8": [0, 0, 0]
+          }
+        }
+      }
+    }
+  }
+}

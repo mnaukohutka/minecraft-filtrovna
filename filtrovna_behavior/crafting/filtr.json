@@ -1,0 +1,25 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "filtrovna:filtr"
+    },
+    "tags": ["crafting_table"],
+    "pattern": [
+      "MCM",
+      "SGS",
+      "MBM"
+    ],
+    "key": {
+      "M": { "item": "minecraft:waxed_copper_block" },
+      "C": { "item": "minecraft:waxed_copper_grate" },
+      "S": { "item": "minecraft:glass" },
+      "G": { "item": "minecraft:pumpkin" },
+      "B": { "item": "minecraft:waxed_copper_bulb" }
+    },
+    "result": {
+      "item": "filtrovna:filtr",
+      "count": 1
+    }
+  }
+}

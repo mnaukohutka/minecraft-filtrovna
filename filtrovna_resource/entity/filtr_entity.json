@@ -1,0 +1,20 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "filtrovna:filtr_entity",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/empty"
+      },
+      "geometry": {
+        "default": "geometry.filtrovna_empty"
+      },
+      "render_controllers": [
+        "controller.render.filtrovna_empty"
+      ]
+    }
+  }
+}

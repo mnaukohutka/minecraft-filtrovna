@@ -1,7 +1,0 @@
-tile.filtrovna:filtr.name=Filtr
-tile.filtrovna:filtr.description=Inteligentní třídící blok s měděným golemem
-filtrovna.ui.title=Filtr – Nastavení
-filtrovna.ui.section.input=Vstup
-filtrovna.ui.section.filter=Filtr
-filtrovna.ui.section.match=Vytříděno
-filtrovna.ui.section.ne=Odpad

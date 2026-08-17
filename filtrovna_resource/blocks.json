@@ -1,0 +1,34 @@
+{
+  "format_version": [1, 1, 0],
+  "filtrovna:filtr": {
+    "textures": {
+      "up": "filtr_top_grate",
+      "down": "filtr_bottom_bulb",
+      "north": "filtr_back_grate",
+      "south": "filtr_front_bulb_green",
+      "east": "filtr_side_minus",
+      "west": "filtr_side_plus"
+    },
+    "sound": "copper"
+  },
+  "filtrovna:filtr_master": {
+    "textures": "filtr_top_grate",
+    "sound": "copper"
+  },
+  "filtrovna:conveyor": {
+    "textures": "filtr_top_grate",
+    "sound": "copper"
+  },
+  "filtrovna:smart_hopper": {
+    "textures": "filtr_top_grate",
+    "sound": "copper"
+  },
+  "filtrovna:golem_dock": {
+    "textures": "filtr_top_grate",
+    "sound": "copper"
+  },
+  "filtrovna:scanner": {
+    "textures": "filtr_front_glass",
+    "sound": "copper"
+  }
+}

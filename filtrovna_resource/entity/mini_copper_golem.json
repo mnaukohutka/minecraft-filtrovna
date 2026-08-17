@@ -1,0 +1,54 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "filtrovna:mini_copper_golem",
+      "materials": {
+        "default": "entity_alphatest",
+        "eyes": "entity_emissive_alpha"
+      },
+      "textures": {
+        "default": "textures/entity/mini_copper_golem",
+        "exposed": "textures/entity/mini_copper_golem_exposed",
+        "weathered": "textures/entity/mini_copper_golem_weathered",
+        "oxidized": "textures/entity/mini_copper_golem_oxidized",
+        "eyes_default": "textures/entity/mini_copper_golem_eyes",
+        "eyes_exposed": "textures/entity/mini_copper_golem_eyes_exposed",
+        "eyes_weathered": "textures/entity/mini_copper_golem_eyes_weathered",
+        "eyes_oxidized": "textures/entity/mini_copper_golem_eyes_oxidized"
+      },
+      "geometry": {
+        "default": "geometry.mini_copper_golem"
+      },
+      "render_controllers": [
+        "controller.render.mini_copper_golem",
+        "controller.render.mini_copper_golem_eyes"
+      ],
+      "spawn_egg": {
+        "base_color": "#B87333",
+        "overlay_color": "#FF8C00"
+      },
+      "animations": {
+        "idle": "animation.mini_copper_golem.idle",
+        "walk": "animation.mini_copper_golem.walk",
+        "inspect": "animation.mini_copper_golem.inspect",
+        "sort_match": "animation.mini_copper_golem.sort_match",
+        "sort_ne": "animation.mini_copper_golem.sort_ne",
+        "drop": "animation.mini_copper_golem.drop",
+        "stuck": "animation.mini_copper_golem.stuck",
+        "deposit": "animation.mini_copper_golem.deposit"
+      },
+      "scripts": {
+        "pre_animation": [
+          "v.oxidation = query.property('filtrovna:oxidation');"
+        ],
+        "animate": [
+          "idle"
+        ]
+      },
+      "animation_controllers": [
+        { "default": "controller.animation.mini_copper_golem.move" }
+      ]
+    }
+  }
+}

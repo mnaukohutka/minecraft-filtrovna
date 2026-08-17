@@ -1,0 +1,9 @@
+{
+  "resource_pack_name": "filtrovna_resource",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "filtrovna_filtr_item": {
+      "textures": "textures/items/filtr_item"
+    }
+  }
+}

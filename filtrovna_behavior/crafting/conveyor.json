@@ -1,0 +1,14 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "filtrovna:conveyor" },
+    "tags": ["crafting_table"],
+    "pattern": ["C  ", "IIII", "  R"],
+    "key": {
+      "C": { "item": "minecraft:copper_ingot" },
+      "I": { "item": "minecraft:iron_ingot" },
+      "R": { "item": "minecraft:redstone" }
+    },
+    "result": { "item": "filtrovna:conveyor", "count": 2 }
+  }
+}
