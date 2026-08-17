@@ -1,10 +1,10 @@
 import { system } from "@minecraft/server";
 import { registerTickHandler } from "./modules/tick_handler.js";
+import { registerFilterEvents } from "./modules/filter_events.js";
 
 system.run(() => {
-  registerTickHandler(system);
-  console.warn("[Filtrovna] Script byl načten.");
-});
-import { registerTickHandler } from "./modules/tick_handler.js";
+  registerFilterEvents();
+  registerTickHandler();
 
-registerTickHandler();
+  console.warn("[Filtrovna] Základní systém spuštěn.");
+});
