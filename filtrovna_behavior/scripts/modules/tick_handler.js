@@ -1,34 +1,28 @@
 // tick_handler.js — Tick cyklus Filtru (Část 4.1) s prioritní frontou, batch a energií.
-import { system, world } from "@minecraft/server";
+import { system } from "@minecraft/server";
 import { getBlockContainer } from "./inventory_manager.js";
 import { tryTransfer, tryDrop, checkFilter, itemPriority } from "./transfer_logic.js";
 import { playBlockAnimation, getBlockState, setBlockState, regenerateEnergy, consumeEnergy } from "./animation_controller.js";
 import { getBlockData, setBlockData, KEYS } from "./storage.js";
 import { get } from "./config.js";
+import { iterateBlocks } from "./registry.js";
 
 const PROCESSING = new Set();
-const DIMENSIONS = ["overworld", "nether", "the_end"];
 const FILTR_ID = "filtrovna:filtr";
 
 function makeKey(block) {
   return `${block.dimension.id}|${block.location.x}|${block.location.y}|${block.location.z}`;
 }
 
+// OPRAVENO: dimension.getBlocks({ type }, { maxBlocks }) NEEXISTUJE —
+// pozice Filtrů se udržují v registru (registry.js).
 export function registerTickHandler() {
   system.runInterval(() => {
-    for (const dimId of DIMENSIONS) {
-      let dimension;
-      try { dimension = world.getDimension(dimId); } catch { continue; }
-      let blocks;
-      try {
-        blocks = dimension.getBlocks({ type: FILTR_ID }, { maxBlocks: 500 });
-      } catch { continue; }
-      for (const block of blocks) {
-        if (PROCESSING.has(makeKey(block))) continue;
-        try { processBlock(block); } catch (e) {
-          console.warn(`[Filtrovna] processBlock chyba: ${e}`);
-          PROCESSING.delete(makeKey(block));
-        }
+    for (const block of iterateBlocks(FILTR_ID)) {
+      if (PROCESSING.has(makeKey(block))) continue;
+      try { processBlock(block); } catch (e) {
+        console.warn(`[Filtrovna] processBlock chyba: ${e}`);
+        PROCESSING.delete(makeKey(block));
       }
     }
   }, 1);
