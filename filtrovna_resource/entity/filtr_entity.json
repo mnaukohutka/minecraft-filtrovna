@@ -1,20 +1,28 @@
 {
-  "format_version": "1.21.30",
+  "format_version": "1.16.0",
   "minecraft:client_entity": {
     "description": {
-      "identifier": "filtrovna:filtr_entity",
+      "identifier": "filtr:filtr_entity",
       "materials": {
-        "default": "entity_alphatest"
+        "*": "Material.default"
       },
       "textures": {
-        "default": "textures/entity/empty"
+        "default": "textures/entity/filtr_entity"
       },
       "geometry": {
-        "default": "geometry.filtrovna_empty"
+        "default": "geometry.filtr_entity"
       },
-      "render_controllers": [
-        "controller.render.filtrovna_empty"
-      ]
+      "animations": {
+        "idle": "animation.filtr_entity.idle"
+      },
+      "animation_controllers": {
+        "idle": "controller.animation.filtr_entity.idle"
+      },
+      "render_controllers": ["controller.render.filtr_entity"],
+      "spawn_egg": {
+        "texture": "spawn_egg",
+        "texture_index": 0
+      }
     }
   }
 }
