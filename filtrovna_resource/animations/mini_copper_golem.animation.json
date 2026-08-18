@@ -1,5 +1,5 @@
 {
-  "format_version": "1.21.0",
+  "format_version": "1.21.30",
   "animations": {
     "animation.mini_copper_golem.idle": {
       "loop": true,
@@ -24,7 +24,7 @@
         "eyes": {
           "scale": [
             1,
-            "query.anim_time % 3 > 2.9 ? 0.1 : 1.0",
+            "math.mod(query.anim_time, 3) > 2.9 ? 0.1 : 1.0",
             1
           ]
         }

@@ -1,5 +1,5 @@
 {
-  "format_version": "1.21.0",
+  "format_version": "1.21.30",
   "animation_controllers": {
     "controller.animation.mini_copper_golem.move": {
       "initial_state": "idle",

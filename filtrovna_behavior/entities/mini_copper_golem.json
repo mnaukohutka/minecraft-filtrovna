@@ -1,5 +1,5 @@
 {
-  "format_version": "1.21.0",
+  "format_version": "1.21.30",
   "minecraft:entity": {
     "description": {
       "identifier": "filtrovna:mini_copper_golem",
@@ -9,7 +9,10 @@
       "properties": {
         "filtrovna:oxidation": {
           "type": "int",
-          "range": [0, 3],
+          "range": [
+            0,
+            3
+          ],
           "default": 0
         }
       }
@@ -19,7 +22,11 @@
     },
     "components": {
       "minecraft:type_family": {
-        "family": ["copper_golem", "filtrovna", "mob"]
+        "family": [
+          "copper_golem",
+          "filtrovna",
+          "mob"
+        ]
       },
       "minecraft:collision_box": {
         "width": 0.4,
@@ -83,7 +90,6 @@
         "can_pickup_any_item": true,
         "can_pickup_to_hand_or_equipment": false
       },
-      "minecraft:can_hold_item": {},
       "minecraft:damage_sensor": {
         "triggers": [
           {
@@ -113,7 +119,9 @@
     "events": {
       "minecraft:entity_spawned": {
         "add": {
-          "component_groups": ["filtrovna:adult"]
+          "component_groups": [
+            "filtrovna:adult"
+          ]
         }
       }
     }

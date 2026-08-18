@@ -5,8 +5,15 @@ import { get } from "./config.js";
 import { setBlockData, getBlockData, KEYS } from "./storage.js";
 
 export function registerCommandHandler() {
+  // chatSend is available only with Beta APIs enabled (@minecraft/server 1.x stable removed it).
+  // Guard against its absence so the whole addon does not fail to load.
+  const chatSignal = world.beforeEvents?.chatSend;
+  if (!chatSignal || typeof chatSignal.subscribe !== "function") {
+    console.warn("[Filtrovna] chatSend nedostupný (vyžaduje Beta API). Použij item UI nebo povol Beta API.");
+    return;
+  }
   try {
-    world.beforeEvents.chatSend.subscribe((event) => {
+    chatSignal.subscribe((event) => {
       const msg = event.message;
       if (!msg.startsWith("/filtrovna") && !msg.startsWith("/filtr ")) return;
       event.cancel = true;
