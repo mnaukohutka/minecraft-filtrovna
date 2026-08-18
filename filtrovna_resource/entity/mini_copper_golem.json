@@ -22,10 +22,6 @@
         "walk": "animation.mini_copper_golem.walk",
         "idle": "animation.mini_copper_golem.idle"
       },
-      "animation_controllers": {
-        "move": "controller.animation.mini_copper_golem.move",
-        "idle": "controller.animation.mini_copper_golem.idle"
-      },
       "render_controllers": ["controller.render.mini_copper_golem"],
       "spawn_egg": {
         "texture": "spawn_egg",
