@@ -1,52 +1,48 @@
 {
-  "format_version": "1.21.30",
+  "format_version": "1.16.0",
   "minecraft:client_entity": {
     "description": {
-      "identifier": "filtrovna:mini_copper_golem",
-      "materials": {
-        "default": "entity_alphatest",
-        "eyes": "entity_emissive_alpha"
-      },
+      "identifier": "filtr:mini_copper_golem",
+      "materials": [
+        {
+          "*": "Material.copper_golem"
+        },
+        {
+          "Array.material": [
+            "Material.copper_golem",
+            "Material.copper_golem_weathered",
+            "Material.copper_golem_oxidized",
+            "Material.copper_golem_exposed"
+          ]
+        }
+      ],
       "textures": {
-        "default": "textures/entity/mini_copper_golem",
-        "exposed": "textures/entity/mini_copper_golem_exposed",
-        "weathered": "textures/entity/mini_copper_golem_weathered",
-        "oxidized": "textures/entity/mini_copper_golem_oxidized",
-        "eyes_default": "textures/entity/mini_copper_golem_eyes",
-        "eyes_exposed": "textures/entity/mini_copper_golem_eyes_exposed",
-        "eyes_weathered": "textures/entity/mini_copper_golem_eyes_weathered",
-        "eyes_oxidized": "textures/entity/mini_copper_golem_eyes_oxidized"
+        "copper_golem": "textures/entity/mini_copper_golem",
+        "copper_golem_weathered": "textures/entity/mini_copper_golem_weathered",
+        "copper_golem_oxidized": "textures/entity/mini_copper_golem_oxidized",
+        "copper_golem_exposed": "textures/entity/mini_copper_golem_exposed"
       },
       "geometry": {
         "default": "geometry.mini_copper_golem"
       },
+      "animations": {
+        "walk": "animation.mini_copper_golem.walk",
+        "idle": "animation.mini_copper_golem.idle"
+      },
+      "animation_controllers": {
+        "move": "controller.animation.mini_copper_golem.move",
+        "idle": "controller.animation.mini_copper_golem.idle"
+      },
       "render_controllers": [
-        "controller.render.mini_copper_golem",
-        "controller.render.mini_copper_golem_eyes"
+        {
+          "array_texture": "Array.texture",
+          "array_material": "Array.material",
+          "render_controller": "controller.render.mini_copper_golem"
+        }
       ],
       "spawn_egg": {
-        "texture": "filtrovna_mini_copper_golem_spawn_egg"
-      },
-      "animations": {
-        "idle": "animation.mini_copper_golem.idle",
-        "walk": "animation.mini_copper_golem.walk",
-        "inspect": "animation.mini_copper_golem.inspect",
-        "sort_match": "animation.mini_copper_golem.sort_match",
-        "sort_ne": "animation.mini_copper_golem.sort_ne",
-        "drop": "animation.mini_copper_golem.drop",
-        "stuck": "animation.mini_copper_golem.stuck",
-        "deposit": "animation.mini_copper_golem.deposit"
-      },
-      "scripts": {
-        "pre_animation": [
-          "v.oxidation = query.property('filtrovna:oxidation');"
-        ],
-        "animate": [
-          "idle",
-          {
-            "default": "controller.animation.mini_copper_golem.move"
-          }
-        ]
+        "texture": "spawn_egg",
+        "texture_index": 0
       }
     }
   }
