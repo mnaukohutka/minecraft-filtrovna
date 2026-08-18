@@ -1,4 +1,6 @@
 // golem_manager.js — Mini Copper Golem: sběr, oxidace, ender truhla, paměť, teamwork.
+// OPRAVENO: odstraněn zbylý kód s nedefinovanou proměnnou someVariable,
+// který shodil celou registraci (ReferenceError).
 import { world, system } from "@minecraft/server";
 import { getEntityData, setEntityData, getBlockData, setBlockData, KEYS, blockKey } from "./storage.js";
 import { get } from "./config.js";
@@ -37,12 +39,6 @@ export function registerGolemManager() {
       }
     }
   }, tickInterval);
-  if (someVariable && someVariable.typeId) {
-  const typeId = someVariable.typeId;
-} else {
-  console.warn("someVariable is undefined!");
-}
-
 
   // Učení golema: sneak + pravý klik na Filtr/truhlu.
   world.afterEvents.playerInteractWithBlock.subscribe((event) => {
