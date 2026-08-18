@@ -1,0 +1,26 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Filtrovna Resource Pack",
+    "description": "Resource pack pro Filtrovnu",
+    "uuid": "69869282-111c-425a-b3e0-1f7d368e432d",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 21, 0]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "d678cfbe-75fb-4795-abf7-1958ce0acd76",
+      "version": [1, 0, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "c19569f4-6aef-4a95-ab7d-3e0a05390943",
+      "version": [1, 0, 0]
+    }
+  ],
+  "metadata": {
+    "authors": ["Filtrovna Project"]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "filtrovna:golem_dock" },
+    "tags": ["crafting_table"],
+    "pattern": [" B ", "IBI", " L "],
+    "key": {
+      "B": { "item": "minecraft:copper_block" },
+      "I": { "item": "minecraft:iron_block" },
+      "L": { "item": "minecraft:redstone_lamp" }
+    },
+    "result": { "item": "filtrovna:golem_dock", "count": 1 }
+  }
+}

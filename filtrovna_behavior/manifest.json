@@ -1,0 +1,41 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Filtrovna Behavior Pack",
+    "description": "Inteligentní třídící blok s měděným golemem",
+    "uuid": "c19569f4-6aef-4a95-ab7d-3e0a05390943",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 21, 0]
+  },
+  "modules": [
+    {
+      "type": "data",
+      "uuid": "ad6746f3-8a92-4eb7-996c-fe2b62147334",
+      "version": [1, 0, 0]
+    },
+    {
+      "type": "script",
+      "language": "javascript",
+      "uuid": "04cab606-0e35-490f-8b96-bfa82fd278f1",
+      "entry": "scripts/main.js",
+      "version": [1, 0, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "1.14.0"
+    },
+    {
+      "module_name": "@minecraft/server-ui",
+      "version": "1.2.0"
+    },
+    {
+      "uuid": "69869282-111c-425a-b3e0-1f7d368e432d",
+      "version": [1, 0, 0]
+    }
+  ],
+  "metadata": {
+    "authors": ["Filtrovna Project"]
+  }
+}

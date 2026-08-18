@@ -1,0 +1,14 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "filtrovna:filtr_master" },
+    "tags": ["crafting_table"],
+    "pattern": [" F ", "FCF", " B "],
+    "key": {
+      "F": { "item": "filtrovna:filtr" },
+      "C": { "item": "minecraft:comparator" },
+      "B": { "item": "minecraft:copper_block" }
+    },
+    "result": { "item": "filtrovna:filtr_master", "count": 1 }
+  }
+}
