@@ -1,20 +1,16 @@
 // scanner.js — Item Scanner: redstone signál podle hodnoty předmětu (Nové funkce #7).
-import { world, system } from "@minecraft/server";
+import { system } from "@minecraft/server";
 import { getBlockData, setBlockData, KEYS } from "./storage.js";
 import { getItemValue } from "./item_data.js";
+import { iterateBlocks } from "./registry.js";
 
 const SCANNER_TYPE = "filtrovna:scanner";
 
+// OPRAVENO: dimension.getBlocks({ type }, ...) neexistuje → registr bloků.
 export function registerScannerManager() {
   system.runInterval(() => {
-    for (const dim of ["overworld", "nether", "the_end"]) {
-      let dimension;
-      try { dimension = world.getDimension(dim); } catch { continue; }
-      let scanners = [];
-      try { scanners = dimension.getBlocks({ type: SCANNER_TYPE }, { maxBlocks: 500 }); } catch { continue; }
-      for (const scanner of scanners) {
-        try { tickScanner(scanner, dimension); } catch {}
-      }
+    for (const scanner of iterateBlocks(SCANNER_TYPE)) {
+      try { tickScanner(scanner, scanner.dimension); } catch {}
     }
   }, 5);
 }
