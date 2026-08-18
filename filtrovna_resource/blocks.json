@@ -13,7 +13,10 @@
           "tint_color": "#ffffff"
         }
       },
-      "render_method": "opaque"
+      "geometry": "geometry.conveyor",
+      "render_method": "opaque",
+      "collision_box": true,
+      "selection_box": true
     },
     "filtr:filtr": {
       "textures": {
@@ -27,7 +30,10 @@
           "tint_color": "#ffffff"
         }
       },
-      "render_method": "opaque"
+      "geometry": "geometry.filtr",
+      "render_method": "opaque",
+      "collision_box": true,
+      "selection_box": true
     },
     "filtr:filtr_master": {
       "textures": {
@@ -41,7 +47,10 @@
           "tint_color": "#ffffff"
         }
       },
-      "render_method": "opaque"
+      "geometry": "geometry.filtr_master",
+      "render_method": "opaque",
+      "collision_box": true,
+      "selection_box": true
     },
     "filtr:golem_dock": {
       "textures": {
@@ -55,7 +64,10 @@
           "tint_color": "#ffffff"
         }
       },
-      "render_method": "opaque"
+      "geometry": "geometry.golem_dock",
+      "render_method": "opaque",
+      "collision_box": true,
+      "selection_box": true
     },
     "filtr:scanner": {
       "textures": {
@@ -69,7 +81,10 @@
           "tint_color": "#ffffff"
         }
       },
-      "render_method": "opaque"
+      "geometry": "geometry.scanner",
+      "render_method": "opaque",
+      "collision_box": true,
+      "selection_box": true
     },
     "filtr:smart_hopper": {
       "textures": {
@@ -83,7 +98,10 @@
           "tint_color": "#ffffff"
         }
       },
-      "render_method": "opaque"
+      "geometry": "geometry.smart_hopper",
+      "render_method": "opaque",
+      "collision_box": true,
+      "selection_box": true
     }
   }
 }
