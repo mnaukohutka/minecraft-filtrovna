@@ -1,87 +1,174 @@
-// main.js — Hlavní entry point Filtrovna addonu.
-// OPRAVENO:
-//  - chyběl import { system } → ReferenceError hned při načtení,
-//  - system.registerComponent() NEEXISTUJE → custom komponenty se registrují
-//    přes system.beforeEvents.startup + blockComponentRegistry.registerCustomComponent(),
-//  - system.afterEvents.tick NEEXISTUJE → tick logika se řeší přes system.runInterval(),
-//  - main.js volal neexistující exporty (ui.handleInteract, tickHandler.onTick),
-//  - main.js importoval moduly, ale NIKDY nezavolal jejich register* funkce
-//    → celý addon se načetl, ale nic nedělal.
-import { world, system } from "@minecraft/server";
+// Filtrovna Behavior Pack - Hlavní skript
+// Autor: mnaukohutka
 
-import * as ui from "./modules/ui_handler.js";
-import * as smartHopper from "./modules/smart_hopper.js";
-import * as master from "./modules/master.js";
-import { loadConfig } from "./modules/config.js";
-import { registerTickHandler } from "./modules/tick_handler.js";
-import { registerCommandHandler } from "./modules/command_handler.js";
-import { registerEvents } from "./modules/events.js";
-import { registerGolemManager } from "./modules/golem_manager.js";
-import { registerConveyorManager } from "./modules/conveyor.js";
-import { registerScannerManager } from "./modules/scanner.js";
-import { registerSmartHopperManager } from "./modules/smart_hopper.js";
-import { registerMasterManager } from "./modules/master.js";
-import { registerDockManager } from "./modules/golem_dock.js";
-import { registerInventoryManager, initLoadedChunks } from "./modules/inventory_manager.js";
+import { world, system, Entity, Block, ItemStack, MinecraftBlockTypes, MinecraftItemTypes, MinecraftEffectTypes } from '@minecraft/server';
+import { registerCustomComponents } from './modules/registry.js';
+import { initConfig, getConfig } from './modules/config.js';
+import { initEvents, registerInteractHandlers } from './modules/events.js';
+import { initTickHandler } from './modules/tick_handler.js';
+import { initCommandHandler } from './modules/command_handler.js';
+import { initGolemManager } from './modules/golem_manager.js';
+import { initInventoryManager } from './modules/inventory_manager.js';
+import { initUIHandler } from './modules/ui_handler.js';
+import { initTransferLogic } from './modules/transfer_logic.js';
+import { initStats } from './modules/stats.js';
+import { initStorage } from './modules/storage.js';
+import { initOwner } from './modules/owner.js';
+import { initItemData } from './modules/item_data.js';
+import { initEffects } from './modules/effects.js';
+import { initAnimationController } from './modules/animation_controller.js';
+import { initConveyor } from './modules/conveyor.js';
+import { initSmartHopper } from './modules/smart_hopper.js';
+import { initMaster } from './modules/master.js';
+import { initScanner } from './modules/scanner.js';
+import { initGolemDock } from './modules/golem_dock.js';
 
-// ---------------------------------------------------------------------------
-// 1. Registrace custom komponent bloků (musí proběhnout ve startup fázi).
-//    Názvy musí odpovídat "minecraft:custom_components" v blocks/*.json.
-//    Callbacky custom komponent běží v read-only kontextu → UI otevíráme
-//    až v system.run().
-// ---------------------------------------------------------------------------
-system.beforeEvents.startup.subscribe((event) => {
-  const registry = event.blockComponentRegistry;
+// Globalní stav
+const Filtrovna = {
+    version: '1.0.0',
+    debug: false,
+    initialized: false,
+    world: null,
+    system: null
+};
 
-  registry.registerCustomComponent("filtrovna:on_interact", {
-    onPlayerInteract: (e) => {
-      if (!e.player) return;
-      const player = e.player;
-      const block = e.block;
-      system.run(() => ui.handleInteract(player, block));
+// Helper funkce pro logging
+function log(message, level = 'info') {
+    const prefix = `[Filtrovna v${Filtrovna.version}]`;
+    const timestamp = new Date().toISOString();
+    
+    switch(level) {
+        case 'error':
+            console.error(`${prefix} [ERROR] ${timestamp} - ${message}`);
+            break;
+        case 'warn':
+            console.warn(`${prefix} [WARN] ${timestamp} - ${message}`);
+            break;
+        case 'debug':
+            if (Filtrovna.debug) {
+                console.log(`${prefix} [DEBUG] ${timestamp} - ${message}`);
+            }
+            break;
+        default:
+            console.log(`${prefix} [INFO] ${timestamp} - ${message}`);
     }
-  });
+}
 
-  registry.registerCustomComponent("filtrovna:on_interact_hopper", {
-    onPlayerInteract: (e) => {
-      if (!e.player) return;
-      const player = e.player;
-      const block = e.block;
-      system.run(() => smartHopper.handleInteract(player, block));
+// Hlavní inicializační funkce
+function initialize() {
+    try {
+        log('Starting Filtrovna initialization...');
+        
+        // Nastavení globálních objektů
+        Filtrovna.world = world;
+        Filtrovna.system = system;
+        
+        // Inicializace konfigurace
+        initConfig(Filtrovna);
+        log('Configuration loaded');
+        
+        // Inicializace storage
+        initStorage(Filtrovna);
+        log('Storage initialized');
+        
+        // Inicializace owner systému
+        initOwner(Filtrovna);
+        log('Owner system initialized');
+        
+        // Inicializace item data
+        initItemData(Filtrovna);
+        log('Item data initialized');
+        
+        // Inicializace efektů
+        initEffects(Filtrovna);
+        log('Effects initialized');
+        
+        // Registrace custom komponent
+        registerCustomComponents(Filtrovna);
+        log('Custom components registered');
+        
+        // Inicializace event handlerů
+        initEvents(Filtrovna);
+        log('Events initialized');
+        
+        // Registrace interact handlerů pro custom komponenty
+        registerInteractHandlers(Filtrovna);
+        log('Interact handlers registered');
+        
+        // Inicializace tick handleru
+        initTickHandler(Filtrovna);
+        log('Tick handler initialized');
+        
+        // Inicializace command handleru
+        initCommandHandler(Filtrovna);
+        log('Command handler initialized');
+        
+        // Inicializace golem manageru
+        initGolemManager(Filtrovna);
+        log('Golem manager initialized');
+        
+        // Inicializace inventory manageru
+        initInventoryManager(Filtrovna);
+        log('Inventory manager initialized');
+        
+        // Inicializace UI handleru
+        initUIHandler(Filtrovna);
+        log('UI handler initialized');
+        
+        // Inicializace transfer logic
+        initTransferLogic(Filtrovna);
+        log('Transfer logic initialized');
+        
+        // Inicializace statistiky
+        initStats(Filtrovna);
+        log('Stats initialized');
+        
+        // Inicializace animation controlleru
+        initAnimationController(Filtrovna);
+        log('Animation controller initialized');
+        
+        // Inicializace conveyor
+        initConveyor(Filtrovna);
+        log('Conveyor initialized');
+        
+        // Inicializace smart hopper
+        initSmartHopper(Filtrovna);
+        log('Smart hopper initialized');
+        
+        // Inicializace master
+        initMaster(Filtrovna);
+        log('Master initialized');
+        
+        // Inicializace scanner
+        initScanner(Filtrovna);
+        log('Scanner initialized');
+        
+        // Inicializace golem dock
+        initGolemDock(Filtrovna);
+        log('Golem dock initialized');
+        
+        Filtrovna.initialized = true;
+        log('Filtrovna successfully initialized!');
+        
+    } catch (error) {
+        log(`Initialization failed: ${error.message}`, 'error');
+        log(`Stack trace: ${error.stack}`, 'error');
+        throw error;
     }
-  });
+}
 
-  registry.registerCustomComponent("filtrovna:on_interact_master", {
-    onPlayerInteract: (e) => {
-      if (!e.player) return;
-      const player = e.player;
-      const block = e.block;
-      system.run(() => master.handleInteract(player, block));
-    }
-  });
-});
+// Spuštění inicializace
+try {
+    initialize();
+} catch (error) {
+    log(`Fatal error during initialization: ${error.message}`, 'error');
+    log(`Stack trace: ${error.stack}`, 'error');
+}
 
-// ---------------------------------------------------------------------------
-// 2. Inicializace po načtení světa.
-// ---------------------------------------------------------------------------
-world.afterEvents.worldLoad.subscribe(() => {
-  loadConfig();
-  registerInventoryManager(); // scoreboard objective
-  initLoadedChunks();         // odstraní osiřelé inventářové entity
-});
-
-// ---------------------------------------------------------------------------
-// 3. Registrace všech handlerů (bez toho addon nic nedělá).
-// ---------------------------------------------------------------------------
-loadConfig();
-registerEvents();
-registerTickHandler();
-registerCommandHandler();
-registerGolemManager();
-registerConveyorManager();
-registerScannerManager();
-registerSmartHopperManager();
-registerMasterManager();
-registerDockManager();
-
-console.warn("[Filtrovna] Addon načten — verze 1.0.0");
+// Export pro případné externí použití
+export const FiltrovnaAPI = {
+    version: Filtrovna.version,
+    isInitialized: () => Filtrovna.initialized,
+    getConfig: () => getConfig(),
+    log: log
+};
