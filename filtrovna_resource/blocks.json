@@ -12,7 +12,8 @@
           "texture": "conveyor_side",
           "tint_color": "#ffffff"
         }
-      }
+      },
+      "render_method": "opaque"
     },
     "filtr:filtr": {
       "textures": {
@@ -25,7 +26,8 @@
           "texture": "filtr_side",
           "tint_color": "#ffffff"
         }
-      }
+      },
+      "render_method": "opaque"
     },
     "filtr:filtr_master": {
       "textures": {
@@ -38,7 +40,8 @@
           "texture": "filtr_master_side",
           "tint_color": "#ffffff"
         }
-      }
+      },
+      "render_method": "opaque"
     },
     "filtr:golem_dock": {
       "textures": {
@@ -51,7 +54,8 @@
           "texture": "golem_dock_side",
           "tint_color": "#ffffff"
         }
-      }
+      },
+      "render_method": "opaque"
     },
     "filtr:scanner": {
       "textures": {
@@ -64,7 +68,8 @@
           "texture": "scanner_side",
           "tint_color": "#ffffff"
         }
-      }
+      },
+      "render_method": "opaque"
     },
     "filtr:smart_hopper": {
       "textures": {
@@ -77,7 +82,8 @@
           "texture": "smart_hopper_side",
           "tint_color": "#ffffff"
         }
-      }
+      },
+      "render_method": "opaque"
     }
   }
 }
