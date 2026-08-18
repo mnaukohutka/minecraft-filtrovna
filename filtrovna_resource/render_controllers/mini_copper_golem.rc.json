@@ -2,47 +2,24 @@
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mini_copper_golem": {
-      "arrays": {
-        "textures": {
-          "Array.textures": [
-            "Texture.default",
-            "Texture.exposed",
-            "Texture.weathered",
-            "Texture.oxidized"
-          ]
-        }
-      },
       "geometry": "Geometry.default",
       "materials": [
-        { "*": "Material.default" }
-      ],
-      "textures": [
-        "Array.textures[v.oxidation]"
-      ]
-    },
-    "controller.render.mini_copper_golem_eyes": {
-      "arrays": {
-        "textures": {
-          "Array.textures": [
-            "Texture.eyes_default",
-            "Texture.eyes_exposed",
-            "Texture.eyes_weathered",
-            "Texture.eyes_oxidized"
-          ]
+        {
+          "*": "Material.copper_golem"
         }
-      },
-      "geometry": "Geometry.default",
-      "materials": [
-        { "eyes": "Material.eyes" }
       ],
       "textures": [
-        "Array.textures[v.oxidation]"
+        "Texture.copper_golem",
+        "Texture.copper_golem_weathered",
+        "Texture.copper_golem_oxidized",
+        "Texture.copper_golem_exposed"
       ],
-      "ignore_lighting": true,
-      "part_visibility": [
-        { "*": false },
-        { "eyes": true }
-      ]
+      "is_hurt_color": {
+        "interface": "query.hurt_time"
+      },
+      "on_fire_color": {
+        "interface": "query.on_fire"
+      }
     }
   }
 }
