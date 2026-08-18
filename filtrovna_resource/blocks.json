@@ -1,34 +1,83 @@
 {
-  "format_version": [1, 1, 0],
-  "filtrovna:filtr": {
-    "textures": {
-      "up": "filtr_top_grate",
-      "down": "filtr_bottom_bulb",
-      "north": "filtr_back_grate",
-      "south": "filtr_front_bulb_green",
-      "east": "filtr_side_minus",
-      "west": "filtr_side_plus"
+  "format_version": "1.16.0",
+  "minecraft:block": {
+    "filtr:conveyor": {
+      "textures": {
+        "up": "conveyor_top",
+        "down": "conveyor_bottom",
+        "side": "conveyor_side"
+      },
+      "material_instances": {
+        "*": {
+          "texture": "conveyor_side",
+          "tint_color": "#ffffff"
+        }
+      }
     },
-    "sound": "copper"
-  },
-  "filtrovna:filtr_master": {
-    "textures": "filtr_top_grate",
-    "sound": "copper"
-  },
-  "filtrovna:conveyor": {
-    "textures": "filtr_top_grate",
-    "sound": "copper"
-  },
-  "filtrovna:smart_hopper": {
-    "textures": "filtr_top_grate",
-    "sound": "copper"
-  },
-  "filtrovna:golem_dock": {
-    "textures": "filtr_top_grate",
-    "sound": "copper"
-  },
-  "filtrovna:scanner": {
-    "textures": "filtr_front_glass",
-    "sound": "copper"
+    "filtr:filtr": {
+      "textures": {
+        "up": "filtr_top",
+        "down": "filtr_bottom",
+        "side": "filtr_side"
+      },
+      "material_instances": {
+        "*": {
+          "texture": "filtr_side",
+          "tint_color": "#ffffff"
+        }
+      }
+    },
+    "filtr:filtr_master": {
+      "textures": {
+        "up": "filtr_master_top",
+        "down": "filtr_master_bottom",
+        "side": "filtr_master_side"
+      },
+      "material_instances": {
+        "*": {
+          "texture": "filtr_master_side",
+          "tint_color": "#ffffff"
+        }
+      }
+    },
+    "filtr:golem_dock": {
+      "textures": {
+        "up": "golem_dock_top",
+        "down": "golem_dock_bottom",
+        "side": "golem_dock_side"
+      },
+      "material_instances": {
+        "*": {
+          "texture": "golem_dock_side",
+          "tint_color": "#ffffff"
+        }
+      }
+    },
+    "filtr:scanner": {
+      "textures": {
+        "up": "scanner_top",
+        "down": "scanner_bottom",
+        "side": "scanner_side"
+      },
+      "material_instances": {
+        "*": {
+          "texture": "scanner_side",
+          "tint_color": "#ffffff"
+        }
+      }
+    },
+    "filtr:smart_hopper": {
+      "textures": {
+        "up": "smart_hopper_top",
+        "down": "smart_hopper_bottom",
+        "side": "smart_hopper_side"
+      },
+      "material_instances": {
+        "*": {
+          "texture": "smart_hopper_side",
+          "tint_color": "#ffffff"
+        }
+      }
+    }
   }
 }
