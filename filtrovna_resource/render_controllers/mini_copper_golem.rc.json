@@ -3,8 +3,14 @@
   "render_controllers": {
     "controller.render.mini_copper_golem": {
       "geometry": "Geometry.default",
-      "materials": [{ "*": "Material.copper_golem" }],
-      "textures": ["Texture.copper_golem"]
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": [
+        "Texture.default"
+      ]
     }
   }
 }
