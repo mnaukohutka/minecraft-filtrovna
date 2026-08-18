@@ -4,7 +4,7 @@
     "description": {
       "identifier": "filtr:filtr_entity",
       "materials": {
-        "*": "Material.default"
+        "default": "Material.default"
       },
       "textures": {
         "default": "textures/entity/filtr_entity"
@@ -14,9 +14,6 @@
       },
       "animations": {
         "idle": "animation.filtr_entity.idle"
-      },
-      "animation_controllers": {
-        "idle": "controller.animation.filtr_entity.idle"
       },
       "render_controllers": ["controller.render.filtr_entity"],
       "spawn_egg": {
