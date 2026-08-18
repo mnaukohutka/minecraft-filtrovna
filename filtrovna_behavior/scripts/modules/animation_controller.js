@@ -41,12 +41,13 @@ export function playSound(block, soundId, options = {}) {
 // golem je součástí geometrie — animace golema uvnitř bloku je vizuálně řešena přes
 // střídání stavů/textur. Pro samostatného golema se animace přehrávají přes entity).
 export function playBlockAnimation(block, animName) {
+  // Vanilla sound event IDs (Část 8) — fungují bez custom souborů.
   const soundMap = {
-    inspect: { sound: "filtrovna.inspect", state: 1, opts: { volume: 0.6, pitch: 1.0 } },
-    sort_match: { sound: "filtrovna.sort_match", state: 2, opts: { volume: 0.7, pitch: 1.2 } },
-    sort_ne: { sound: "filtrovna.sort_ne", state: 3, opts: { volume: 0.7, pitch: 0.8 } },
-    drop: { sound: "filtrovna.drop", state: 4, opts: { volume: 0.7, pitch: 1.0 } },
-    stuck: { sound: "filtrovna.stuck", state: 5, opts: { volume: 0.7, pitch: 0.8 } },
+    inspect: { sound: "note.iron_xylophone", state: 1, opts: { volume: 0.6, pitch: 1.0 } },
+    sort_match: { sound: "block.copper_bulb.turn_on", state: 2, opts: { volume: 0.7, pitch: 1.2 } },
+    sort_ne: { sound: "block.copper_bulb.turn_off", state: 3, opts: { volume: 0.7, pitch: 0.8 } },
+    drop: { sound: "random.dispenser", state: 4, opts: { volume: 0.7, pitch: 1.0 } },
+    stuck: { sound: "note.bass", state: 5, opts: { volume: 0.7, pitch: 0.8 } },
     idle: { sound: null, state: 0, opts: {} }
   };
   const entry = soundMap[animName] ?? soundMap.idle;

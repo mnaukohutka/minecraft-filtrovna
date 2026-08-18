@@ -4,11 +4,36 @@ import { KEYS, getBlockData, setBlockData } from "./storage.js";
 
 const ENTITY_TYPE = "filtrovna:filtr_entity";
 
+// Bloky, které používají inventářovou entitu (jinak by repairTrackingOnLoad
+// entity Masteru/Smart Hopperu omylem odstranil).
+const BLOCKS_WITH_ENTITY = new Set([
+  "filtrovna:filtr",
+  "filtrovna:filtr_master",
+  "filtrovna:smart_hopper"
+]);
+
 export function getInventoryEntity(block) {
   const entityId = getBlockData(block, KEYS.FILTR_ENTITY, null);
-  if (!entityId || typeof entityId !== "string") return undefined;
+  if (entityId && typeof entityId === "string") {
+    try {
+      const entity = world.getEntity(entityId);
+      if (entity) return entity;
+    } catch {}
+  }
+  // Fallback: najdi entitu podle pozice (např. po zničení bloku už
+  // dynamic properties bloku neexistují a ID by se jinak ztratilo).
   try {
-    return world.getEntity(entityId);
+    const center = {
+      x: block.location.x + 0.5,
+      y: block.location.y + 0.5,
+      z: block.location.z + 0.5
+    };
+    const found = block.dimension.getEntities({
+      type: ENTITY_TYPE,
+      location: center,
+      maxDistance: 0.75
+    });
+    return found[0];
   } catch {
     return undefined;
   }
@@ -61,7 +86,7 @@ export function repairTrackingOnLoad() {
       const by = Math.floor(e.location.y);
       const bz = Math.floor(e.location.z);
       const b = dimension.getBlock({ x: bx, y: by, z: bz });
-      if (!b || b.typeId !== "filtrovna:filtr") {
+      if (!b || !BLOCKS_WITH_ENTITY.has(b.typeId)) {
         try { e.remove(); } catch {}
       }
     }
