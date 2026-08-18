@@ -1,21 +1,15 @@
 // conveyor.js — Conveyor Belt: pohyb item entit po pásu (Nové funkce #4).
-import { world, system } from "@minecraft/server";
+import { system } from "@minecraft/server";
 import { get } from "./config.js";
+import { iterateBlocks } from "./registry.js";
 
 const CONVEYOR_TYPE = "filtrovna:conveyor";
 
+// OPRAVENO: dimension.getBlocks({ type }, ...) neexistuje → registr bloků.
 export function registerConveyorManager() {
   system.runInterval(() => {
-    const speed = get("conveyor.speed_blocks_per_second") ?? 1.0;
-    const tickInterval = Math.max(1, Math.round(20 / speed));
-    for (const dim of ["overworld", "nether", "the_end"]) {
-      let dimension;
-      try { dimension = world.getDimension(dim); } catch { continue; }
-      let conveyors = [];
-      try { conveyors = dimension.getBlocks({ type: CONVEYOR_TYPE }, { maxBlocks: 500 }); } catch { continue; }
-      for (const conv of conveyors) {
-        try { tickConveyor(conv, dimension); } catch {}
-      }
+    for (const conv of iterateBlocks(CONVEYOR_TYPE)) {
+      try { tickConveyor(conv, conv.dimension); } catch {}
     }
   }, 20); // každá sekunda.
 }

@@ -1,4 +1,5 @@
 // owner.js — Owner lock (Část 16): majitel Filtru i golema.
+import { PlayerPermissionLevel } from "@minecraft/server";
 import { getBlockData, getEntityData, setBlockData, setEntityData, KEYS } from "./storage.js";
 import { get } from "./config.js";
 
@@ -19,12 +20,14 @@ export function setGolemOwner(entity, playerId) {
 }
 
 // Kontrola, zda může hráč měnit nastavení.
+// OPRAVENO: player.isOp() ve stabilním API neexistuje → playerPermissionLevel.
 export function canModifyBlock(player, block) {
   if (get("security.enable_owner_lock") !== true) return true;
   const owner = getBlockOwner(block);
   if (!owner) return true;
   if (owner === player.id) return true;
-  if (get("security.allow_owner_override") === true && player.isOp()) return true;
+  if (get("security.allow_owner_override") === true &&
+      player.playerPermissionLevel === PlayerPermissionLevel.Operator) return true;
   return false;
 }
 

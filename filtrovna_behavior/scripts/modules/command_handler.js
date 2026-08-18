@@ -3,6 +3,7 @@ import { world, system, ItemStack } from "@minecraft/server";
 import { getBlockContainer, ensureInventoryForBlock } from "./inventory_manager.js";
 import { get } from "./config.js";
 import { setBlockData, getBlockData, KEYS } from "./storage.js";
+import { iterateBlocks } from "./registry.js";
 
 export function registerCommandHandler() {
   // chatSend is available only with Beta APIs enabled (@minecraft/server 1.x stable removed it).
@@ -148,23 +149,22 @@ function handleOwner(player, parts) {
 
 function handleDebug(player, parts) {
   const val = parts[2] === "true";
-  setBlockData({ dimension: player.dimension, location: player.location, getDynamicProperty: () => null, setDynamicProperty: () => {} }, "filtrovna:debug", val);
+  try { world.setDynamicProperty("filtrovna:debug", val); } catch {}
   player.sendMessage(`§aDebug mód: ${val ? "ZAPNUTO" : "VYPNUTO"}`);
 }
 
 function handlePerf(player) {
   player.sendMessage("§e--- Filtrovna Performance ---");
+  // OPRAVENO: dimension.getBlocks({ type }, ...) neexistuje → registr bloků.
   let count = 0;
+  for (const _ of iterateBlocks("filtrovna:filtr")) count++;
+  let golems = 0;
   for (const dim of ["overworld", "nether", "the_end"]) {
     try {
-      const d = world.getDimension(dim);
-      const blocks = d.getBlocks({ type: "filtrovna:filtr" }, { maxBlocks: 1000 });
-      count += blocks.length;
-      const golems = d.getEntities({ type: "filtrovna:mini_copper_golem" });
-      player.sendMessage(`§7${dim}: ${blocks.length} Filtrů, ${golems.length} golemů`);
+      golems += world.getDimension(dim).getEntities({ type: "filtrovna:mini_copper_golem" }).length;
     } catch {}
   }
-  player.sendMessage(`§aCelkem Filtrů: ${count}`);
+  player.sendMessage(`§aCelkem Filtrů: ${count}, golemů: ${golems}`);
 }
 
 function handleStats(player, parts) {

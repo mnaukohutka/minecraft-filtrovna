@@ -1,5 +1,7 @@
 // master.js — Filtr Master: propojení Filtrů, synchronizace, global matching (Nové funkce #3).
-import { world, system, ItemStack } from "@minecraft/server";
+import { system } from "@minecraft/server";
+import { iterateBlocks } from "./registry.js";
+import { openMasterUI } from "./ui_handler.js";
 import { getBlockData, setBlockData, KEYS, blockKey } from "./storage.js";
 import { getBlockContainer } from "./inventory_manager.js";
 import { get } from "./config.js";
@@ -7,20 +9,21 @@ import { get } from "./config.js";
 const MASTER_TYPE = "filtrovna:filtr_master";
 const FILTR_TYPE = "filtrovna:filtr";
 
+// OPRAVENO: dimension.getBlocks({ type }, ...) neexistuje → registr bloků.
 export function registerMasterManager() {
   system.runInterval(() => {
-    for (const dim of ["overworld", "nether", "the_end"]) {
-      let dimension;
-      try { dimension = world.getDimension(dim); } catch { continue; }
-      let masters = [];
-      try { masters = dimension.getBlocks({ type: MASTER_TYPE }, { maxBlocks: 100 }); } catch { continue; }
-      for (const master of masters) {
-        try { tickMaster(master, dimension); } catch (e) {
-          console.warn(`[Filtrovna] tickMaster chyba: ${e}`);
-        }
+    for (const master of iterateBlocks(MASTER_TYPE)) {
+      try { tickMaster(master, master.dimension); } catch (e) {
+        console.warn(`[Filtrovna] tickMaster chyba: ${e}`);
       }
     }
   }, 40); // každé 2 sekundy.
+}
+
+// Custom komponenta "filtrovna:on_interact_master" → otevře Master UI.
+// (Dříve ji main.js hledal jako master.handleInteract, která neexistovala.)
+export function handleInteract(player, block) {
+  openMasterUI(player, block);
 }
 
 function tickMaster(masterBlock, dimension) {

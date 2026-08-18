@@ -2,30 +2,35 @@
   "format_version": "1.16.0",
   "minecraft:client_entity": {
     "description": {
-      "identifier": "filtr:mini_copper_golem",
+      "identifier": "filtrovna:mini_copper_golem",
       "materials": {
-        "copper_golem": "Material.copper_golem",
-        "copper_golem_weathered": "Material.copper_golem_weathered",
-        "copper_golem_oxidized": "Material.copper_golem_oxidized",
-        "copper_golem_exposed": "Material.copper_golem_exposed"
+        "default": "entity_alphatest"
       },
       "textures": {
-        "copper_golem": "textures/entity/mini_copper_golem",
-        "copper_golem_weathered": "textures/entity/mini_copper_golem_weathered",
-        "copper_golem_oxidized": "textures/entity/mini_copper_golem_oxidized",
-        "copper_golem_exposed": "textures/entity/mini_copper_golem_exposed"
+        "default": "textures/entity/mini_copper_golem",
+        "exposed": "textures/entity/mini_copper_golem_exposed",
+        "weathered": "textures/entity/mini_copper_golem_weathered",
+        "oxidized": "textures/entity/mini_copper_golem_oxidized"
       },
       "geometry": {
         "default": "geometry.mini_copper_golem"
       },
       "animations": {
+        "idle": "animation.mini_copper_golem.idle",
         "walk": "animation.mini_copper_golem.walk",
-        "idle": "animation.mini_copper_golem.idle"
+        "move_controller": "controller.animation.mini_copper_golem.move"
       },
-      "render_controllers": ["controller.render.mini_copper_golem"],
+      "scripts": {
+        "animate": [
+          "move_controller"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.mini_copper_golem"
+      ],
       "spawn_egg": {
-        "texture": "spawn_egg",
-        "texture_index": 0
+        "base_color": "#B87333",
+        "overlay_color": "#7FBF7F"
       }
     }
   }

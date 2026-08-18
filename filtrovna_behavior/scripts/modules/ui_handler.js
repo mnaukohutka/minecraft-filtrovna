@@ -1,5 +1,5 @@
 // ui_handler.js — Custom UI přes server-ui (Část 5) + custom komponenty pro interakci.
-import { world, system } from "@minecraft/server";
+import { ItemStack } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { getBlockContainer, ensureInventoryForBlock } from "./inventory_manager.js";
 import { getBlockData, setBlockData, KEYS } from "./storage.js";
@@ -8,33 +8,13 @@ import { get } from "./config.js";
 
 const FILTR_ID = "filtrovna:filtr";
 
-// Registrace custom komponenty pro interakci (pravý klik → otevře UI).
-export function registerBlockComponents() {
-  try {
-    world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
-      const block = event.block;
-      if (block.typeId !== FILTR_ID) return;
-      const player = event.player;
-      // Pokud hráč sneakuje, necháme default interakci.
-      if (player.isSneaking) return;
-      event.cancel = true;
-      system.run(() => openFiltrUI(player, block));
-    });
-  } catch (e) {
-    console.warn(`[Filtrovna] registerBlockComponents chyba: ${e}`);
-  }
-}
-
-export function registerUIHandler() {
-  // Filtr Master interakce.
-  try {
-    world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
-      if (event.block.typeId !== "filtrovna:filtr_master") return;
-      if (event.player.isSneaking) return;
-      event.cancel = true;
-      system.run(() => openMasterUI(event.player, event.block));
-    });
-  } catch {}
+// Custom komponenta "filtrovna:on_interact" (registrovaná v main.js přes
+// system.beforeEvents.startup → blockComponentRegistry) volá tuto funkci.
+// OPRAVENO: původní world.beforeEvents.playerInteractWithBlock není ve stabilním
+// API spolehlivě dostupný a main.js navíc volal neexistující ui.handleInteract.
+export function handleInteract(player, block) {
+  if (player.isSneaking) return; // sneak = normální interakce (pokládka atd.)
+  openFiltrUI(player, block);
 }
 
 async function openFiltrUI(player, block) {
@@ -45,7 +25,7 @@ async function openFiltrUI(player, block) {
   }
 
   // Zvuk otevření.
-  playSound(block, "filtrovna.ui_open");
+  playSound(block, "random.chestopen");
 
   const mode = getBlockData(block, KEYS.FILTR_MODE, "exact");
   const priority = getBlockData(block, KEYS.FILTR_PRIORITY, true);
@@ -70,7 +50,7 @@ async function openFiltrUI(player, block) {
 
   const response = await form.show(player);
   if (response.canceled) {
-    playSound(block, "filtrovna.ui_close");
+    playSound(block, "random.chestclosed");
     return;
   }
 
@@ -82,10 +62,10 @@ async function openFiltrUI(player, block) {
     case 4: dumpSlotsToPlayer(player, container, 19, 9); break;
     case 5: dumpSlotsToPlayer(player, container, 28, 9); break;
   }
-  playSound(block, "filtrovna.ui_close");
+  playSound(block, "random.chestclosed");
 }
 
-async function showSlotGrid(player, block, container, start, count, name, interactive) {
+export async function showSlotGrid(player, block, container, start, count, name, interactive) {
   const form = new ActionFormData().title(name).body(interactive ? "Klikni na slot pro akci." : "Read-only náhled.");
   for (let i = start; i < start + count; i++) {
     const item = container.getItem(i);
@@ -152,7 +132,7 @@ function dumpSlotsToPlayer(player, container, start, count) {
   player.sendMessage(`§aVysypáno ${dumped} stacků.`);
 }
 
-async function openMasterUI(player, block) {
+export async function openMasterUI(player, block) {
   const linked = getBlockData(block, KEYS.MASTER_LINKED, []);
   const stats = getBlockData(block, KEYS.MASTER_STATS, { sorted: 0, redirected: 0, attempts: 0 });
   const form = new ActionFormData()
@@ -204,7 +184,7 @@ async function openMasterUI(player, block) {
         if (c) {
           for (let i = 0; i < template.length; i++) {
             const t = template[i];
-            c.setItem(9 + i, t ? new (await import("@minecraft/server")).ItemStack(t.typeId, t.amount) : undefined);
+            c.setItem(9 + i, t ? new ItemStack(t.typeId, t.amount) : undefined);
           }
         }
       }

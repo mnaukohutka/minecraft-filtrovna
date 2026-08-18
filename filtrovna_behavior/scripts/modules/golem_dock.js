@@ -1,23 +1,18 @@
 // golem_dock.js — Docking Station: nabíjení golemů, home base (Nové funkce #6).
-import { world, system } from "@minecraft/server";
+import { system } from "@minecraft/server";
 import { get } from "./config.js";
 import { resetOxidation } from "./golem_manager.js";
+import { iterateBlocks } from "./registry.js";
 
 const DOCK_TYPE = "filtrovna:golem_dock";
 const GOLEM_TYPE = "filtrovna:mini_copper_golem";
 const DOCK_RADIUS = 4;
 
+// OPRAVENO: dimension.getBlocks({ type }, ...) neexistuje → registr bloků.
 export function registerDockManager() {
-  const chargeRate = get("dock.charge_rate_per_tick") ?? 5;
   system.runInterval(() => {
-    for (const dim of ["overworld", "nether", "the_end"]) {
-      let dimension;
-      try { dimension = world.getDimension(dim); } catch { continue; }
-      let docks = [];
-      try { docks = dimension.getBlocks({ type: DOCK_TYPE }, { maxBlocks: 200 }); } catch { continue; }
-      for (const dock of docks) {
-        try { tickDock(dock, dimension); } catch {}
-      }
+    for (const dock of iterateBlocks(DOCK_TYPE)) {
+      try { tickDock(dock, dock.dimension); } catch {}
     }
   }, 20);
 }
@@ -38,7 +33,8 @@ function tickDock(block, dimension) {
   if (redstone > 0) {
     // Odpočinek — zastav golemy (nastav immobile přes tag).
     for (const golem of golems) {
-      try { golem.addEffect("slowness", 40, 255, false); } catch {}
+      // OPRAVENO: addEffect(effect, duration, { amplifier, showParticles })
+      try { golem.addEffect("minecraft:slowness", 40, { amplifier: 255, showParticles: false }); } catch {}
     }
     return;
   }
@@ -47,8 +43,8 @@ function tickDock(block, dimension) {
   for (const golem of golems) {
     resetOxidation(golem);
     try {
-      golem.addEffect("speed", 100, 1, false);
-      golem.addEffect("regeneration", 100, 1, false);
+      golem.addEffect("minecraft:speed", 100, { amplifier: 1, showParticles: false });
+      golem.addEffect("minecraft:regeneration", 100, { amplifier: 1, showParticles: false });
     } catch {}
   }
 }

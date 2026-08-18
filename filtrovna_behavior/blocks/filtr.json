@@ -22,144 +22,47 @@
     "components": {
       "minecraft:geometry": "geometry.filtrovna_filtr",
       "minecraft:material_instances": {
-        "*": {
-          "texture": "filtr_top_grate",
-          "render_method": "opaque"
-        },
-        "up": {
-          "texture": "filtr_top_grate",
-          "render_method": "opaque"
-        },
-        "down": {
-          "texture": "filtr_bottom_bulb",
-          "render_method": "opaque",
-          "face_dimming": false,
-          "ambient_occlusion": false
-        },
-        "north": {
-          "texture": "filtr_back_grate",
-          "render_method": "opaque"
-        },
-        "west": {
-          "texture": "filtr_side_plus",
-          "render_method": "opaque"
-        },
-        "east": {
-          "texture": "filtr_side_minus",
-          "render_method": "opaque"
-        },
-        "south": {
-          "texture": "filtr_front_glass",
-          "render_method": "blend",
-          "face_dimming": false,
-          "ambient_occlusion": false
-        }
+        "up": { "texture": "filtr_top_grate" },
+        "down": { "texture": "filtr_front_bulb_green", "face_dimming": false, "ambient_occlusion": false },
+        "north": { "texture": "filtr_back_grate" },
+        "west": { "texture": "filtr_side_plus" },
+        "east": { "texture": "filtr_side_minus" },
+        "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false }
       },
       "minecraft:collision_box": true,
       "minecraft:selection_box": true,
-      "minecraft:destructible_by_mining": {
-        "seconds_to_destroy": 3.5
-      },
-      "minecraft:destructible_by_explosion": {
-        "explosion_resistance": 6.0
-      },
+      "minecraft:destructible_by_mining": { "seconds_to_destroy": 3.5 },
+      "minecraft:destructible_by_explosion": { "explosion_resistance": 6.0 },
       "minecraft:friction": 0.4,
       "minecraft:map_color": "#B87333",
       "minecraft:light_emission": 8,
-      "minecraft:custom_components": [
-        "filtrovna:on_interact"
-      ]
+      "minecraft:custom_components": ["filtrovna:on_interact"]
     },
     "permutations": [
-      {
-        "condition": "query.block_state('minecraft:cardinal_direction') == 'south'",
-        "components": {
-          "minecraft:transformation": { "rotation": [0, 0, 0] }
-        }
-      },
-      {
-        "condition": "query.block_state('minecraft:cardinal_direction') == 'west'",
-        "components": {
-          "minecraft:transformation": { "rotation": [0, 90, 0] }
-        }
-      },
-      {
-        "condition": "query.block_state('minecraft:cardinal_direction') == 'north'",
-        "components": {
-          "minecraft:transformation": { "rotation": [0, 180, 0] }
-        }
-      },
-      {
-        "condition": "query.block_state('minecraft:cardinal_direction') == 'east'",
-        "components": {
-          "minecraft:transformation": { "rotation": [0, 270, 0] }
-        }
-      },
-      {
-        "condition": "query.block_state('filtrovna:state') == 1",
-        "components": {
-          "minecraft:material_instances": {
-            "south": {
-              "texture": "filtr_front_bulb_yellow",
-              "render_method": "opaque",
-              "face_dimming": false
-            }
-          },
-          "minecraft:light_emission": 10
-        }
-      },
-      {
-        "condition": "query.block_state('filtrovna:state') == 2",
-        "components": {
-          "minecraft:material_instances": {
-            "south": {
-              "texture": "filtr_front_bulb_blue",
-              "render_method": "opaque",
-              "face_dimming": false
-            }
-          },
-          "minecraft:light_emission": 12
-        }
-      },
-      {
-        "condition": "query.block_state('filtrovna:state') == 3",
-        "components": {
-          "minecraft:material_instances": {
-            "south": {
-              "texture": "filtr_front_bulb_orange",
-              "render_method": "opaque",
-              "face_dimming": false
-            }
-          },
-          "minecraft:light_emission": 12
-        }
-      },
-      {
-        "condition": "query.block_state('filtrovna:state') == 4",
-        "components": {
-          "minecraft:material_instances": {
-            "south": {
-              "texture": "filtr_front_bulb_white",
-              "render_method": "opaque",
-              "face_dimming": false
-            }
-          },
-          "minecraft:light_emission": 15
-        }
-      },
-      {
-        "condition": "query.block_state('filtrovna:state') == 5",
-        "components": {
-          "minecraft:material_instances": {
-            "south": {
-              "texture": "filtr_front_bulb_red",
-              "render_method": "opaque",
-              "face_dimming": false
-            }
-          },
-          "minecraft:light_emission": 6
-        }
-      }
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'south' && query.block_state('filtrovna:state') == 0", "components": { "minecraft:transformation": { "rotation": [0, 0, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_green", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 8 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'south' && query.block_state('filtrovna:state') == 1", "components": { "minecraft:transformation": { "rotation": [0, 0, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_yellow", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 10 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'south' && query.block_state('filtrovna:state') == 2", "components": { "minecraft:transformation": { "rotation": [0, 0, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_blue", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 12 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'south' && query.block_state('filtrovna:state') == 3", "components": { "minecraft:transformation": { "rotation": [0, 0, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_orange", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 12 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'south' && query.block_state('filtrovna:state') == 4", "components": { "minecraft:transformation": { "rotation": [0, 0, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_white", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 15 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'south' && query.block_state('filtrovna:state') == 5", "components": { "minecraft:transformation": { "rotation": [0, 0, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_red", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 6 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'west' && query.block_state('filtrovna:state') == 0", "components": { "minecraft:transformation": { "rotation": [0, 90, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_green", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 8 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'west' && query.block_state('filtrovna:state') == 1", "components": { "minecraft:transformation": { "rotation": [0, 90, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_yellow", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 10 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'west' && query.block_state('filtrovna:state') == 2", "components": { "minecraft:transformation": { "rotation": [0, 90, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_blue", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 12 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'west' && query.block_state('filtrovna:state') == 3", "components": { "minecraft:transformation": { "rotation": [0, 90, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_orange", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 12 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'west' && query.block_state('filtrovna:state') == 4", "components": { "minecraft:transformation": { "rotation": [0, 90, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_white", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 15 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'west' && query.block_state('filtrovna:state') == 5", "components": { "minecraft:transformation": { "rotation": [0, 90, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_red", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 6 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'north' && query.block_state('filtrovna:state') == 0", "components": { "minecraft:transformation": { "rotation": [0, 180, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_green", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 8 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'north' && query.block_state('filtrovna:state') == 1", "components": { "minecraft:transformation": { "rotation": [0, 180, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_yellow", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 10 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'north' && query.block_state('filtrovna:state') == 2", "components": { "minecraft:transformation": { "rotation": [0, 180, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_blue", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 12 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'north' && query.block_state('filtrovna:state') == 3", "components": { "minecraft:transformation": { "rotation": [0, 180, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_orange", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 12 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'north' && query.block_state('filtrovna:state') == 4", "components": { "minecraft:transformation": { "rotation": [0, 180, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_white", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 15 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'north' && query.block_state('filtrovna:state') == 5", "components": { "minecraft:transformation": { "rotation": [0, 180, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_red", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 6 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'east' && query.block_state('filtrovna:state') == 0", "components": { "minecraft:transformation": { "rotation": [0, 270, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_green", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 8 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'east' && query.block_state('filtrovna:state') == 1", "components": { "minecraft:transformation": { "rotation": [0, 270, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_yellow", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 10 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'east' && query.block_state('filtrovna:state') == 2", "components": { "minecraft:transformation": { "rotation": [0, 270, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_blue", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 12 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'east' && query.block_state('filtrovna:state') == 3", "components": { "minecraft:transformation": { "rotation": [0, 270, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_orange", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 12 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'east' && query.block_state('filtrovna:state') == 4", "components": { "minecraft:transformation": { "rotation": [0, 270, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_white", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 15 } },
+      { "condition": "query.block_state('minecraft:cardinal_direction') == 'east' && query.block_state('filtrovna:state') == 5", "components": { "minecraft:transformation": { "rotation": [0, 270, 0] }, "minecraft:material_instances": { "up": { "texture": "filtr_top_grate" }, "down": { "texture": "filtr_front_bulb_red", "face_dimming": false, "ambient_occlusion": false }, "north": { "texture": "filtr_back_grate" }, "west": { "texture": "filtr_side_plus" }, "east": { "texture": "filtr_side_minus" }, "south": { "texture": "filtr_front_glass", "render_method": "blend", "face_dimming": false, "ambient_occlusion": false } }, "minecraft:light_emission": 6 } }
     ]
   }
 }
