@@ -1,5 +1,5 @@
 {
-  "format_version": "1.21.0",
+  "format_version": "1.21.30",
   "minecraft:client_entity": {
     "description": {
       "identifier": "filtrovna:mini_copper_golem",
@@ -25,8 +25,7 @@
         "controller.render.mini_copper_golem_eyes"
       ],
       "spawn_egg": {
-        "base_color": "#B87333",
-        "overlay_color": "#FF8C00"
+        "texture": "filtrovna_mini_copper_golem_spawn_egg"
       },
       "animations": {
         "idle": "animation.mini_copper_golem.idle",
@@ -43,12 +42,12 @@
           "v.oxidation = query.property('filtrovna:oxidation');"
         ],
         "animate": [
-          "idle"
+          "idle",
+          {
+            "default": "controller.animation.mini_copper_golem.move"
+          }
         ]
-      },
-      "animation_controllers": [
-        { "default": "controller.animation.mini_copper_golem.move" }
-      ]
+      }
     }
   }
 }

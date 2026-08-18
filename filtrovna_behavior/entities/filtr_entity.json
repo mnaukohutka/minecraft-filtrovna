@@ -1,5 +1,5 @@
 {
-  "format_version": "1.21.0",
+  "format_version": "1.21.30",
   "minecraft:entity": {
     "description": {
       "identifier": "filtrovna:filtr_entity",
@@ -12,7 +12,10 @@
     },
     "components": {
       "minecraft:type_family": {
-        "family": ["filtrovna", "inanimate"]
+        "family": [
+          "filtrovna",
+          "inanimate"
+        ]
       },
       "minecraft:collision_box": {
         "width": 0,
@@ -30,7 +33,6 @@
         "is_pushable_by_piston": false
       },
       "minecraft:persistent": {},
-      "minecraft:invisible": {},
       "minecraft:fire_immune": {},
       "minecraft:damage_sensor": {
         "triggers": [
@@ -47,7 +49,7 @@
         "private": true
       },
       "minecraft:custom_hit_test": {
-        "hit_boxes": []
+        "hitboxes": []
       },
       "minecraft:conditional_bandwidth_optimization": {
         "default_values": {
@@ -60,7 +62,9 @@
     "events": {
       "minecraft:entity_spawned": {
         "add": {
-          "component_groups": ["filtrovna:core"]
+          "component_groups": [
+            "filtrovna:core"
+          ]
         }
       }
     }

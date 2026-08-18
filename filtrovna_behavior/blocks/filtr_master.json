@@ -1,5 +1,5 @@
 {
-  "format_version": "1.21.0",
+  "format_version": "1.21.30",
   "minecraft:block": {
     "description": {
       "identifier": "filtrovna:filtr_master",
@@ -23,7 +23,7 @@
       },
       "minecraft:collision_box": true,
       "minecraft:selection_box": true,
-      "minecraft:destructible_by_mining": { "seconds": 3.5 },
+      "minecraft:destructible_by_mining": { "seconds_to_destroy": 3.5 },
       "minecraft:destructible_by_explosion": { "explosion_resistance": 6.0 },
       "minecraft:map_color": "#B87333",
       "minecraft:light_emission": 4,

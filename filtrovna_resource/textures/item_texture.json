@@ -4,6 +4,24 @@
   "texture_data": {
     "filtrovna_filtr_item": {
       "textures": "textures/items/filtr_item"
+    },
+    "filtrovna_filtr_master_item": {
+      "textures": "textures/items/filtr_master_item"
+    },
+    "filtrovna_conveyor_item": {
+      "textures": "textures/items/conveyor_item"
+    },
+    "filtrovna_smart_hopper_item": {
+      "textures": "textures/items/smart_hopper_item"
+    },
+    "filtrovna_golem_dock_item": {
+      "textures": "textures/items/golem_dock_item"
+    },
+    "filtrovna_scanner_item": {
+      "textures": "textures/items/scanner_item"
+    },
+    "filtrovna_mini_copper_golem_spawn_egg": {
+      "textures": "textures/items/mini_copper_golem_spawn_egg"
     }
   }
 }
