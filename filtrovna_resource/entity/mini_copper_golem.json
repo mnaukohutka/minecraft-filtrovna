@@ -3,19 +3,12 @@
   "minecraft:client_entity": {
     "description": {
       "identifier": "filtr:mini_copper_golem",
-      "materials": [
-        {
-          "*": "Material.copper_golem"
-        },
-        {
-          "Array.material": [
-            "Material.copper_golem",
-            "Material.copper_golem_weathered",
-            "Material.copper_golem_oxidized",
-            "Material.copper_golem_exposed"
-          ]
-        }
-      ],
+      "materials": {
+        "copper_golem": "Material.copper_golem",
+        "copper_golem_weathered": "Material.copper_golem_weathered",
+        "copper_golem_oxidized": "Material.copper_golem_oxidized",
+        "copper_golem_exposed": "Material.copper_golem_exposed"
+      },
       "textures": {
         "copper_golem": "textures/entity/mini_copper_golem",
         "copper_golem_weathered": "textures/entity/mini_copper_golem_weathered",
@@ -34,11 +27,7 @@
         "idle": "controller.animation.mini_copper_golem.idle"
       },
       "render_controllers": [
-        {
-          "array_texture": "Array.texture",
-          "array_material": "Array.material",
-          "render_controller": "controller.render.mini_copper_golem"
-        }
+        "controller.render.mini_copper_golem"
       ],
       "spawn_egg": {
         "texture": "spawn_egg",
