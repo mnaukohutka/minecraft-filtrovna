@@ -37,6 +37,12 @@ export function registerGolemManager() {
       }
     }
   }, tickInterval);
+  if (someVariable && someVariable.typeId) {
+  const typeId = someVariable.typeId;
+} else {
+  console.warn("someVariable is undefined!");
+}
+
 
   // Učení golema: sneak + pravý klik na Filtr/truhlu.
   world.afterEvents.playerInteractWithBlock.subscribe((event) => {
