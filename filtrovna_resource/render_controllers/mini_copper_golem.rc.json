@@ -3,23 +3,8 @@
   "render_controllers": {
     "controller.render.mini_copper_golem": {
       "geometry": "Geometry.default",
-      "materials": [
-        {
-          "*": "Material.copper_golem"
-        }
-      ],
-      "textures": [
-        "Texture.copper_golem",
-        "Texture.copper_golem_weathered",
-        "Texture.copper_golem_oxidized",
-        "Texture.copper_golem_exposed"
-      ],
-      "is_hurt_color": {
-        "interface": "query.hurt_time"
-      },
-      "on_fire_color": {
-        "interface": "query.on_fire"
-      }
+      "materials": [{ "*": "Material.copper_golem" }],
+      "textures": ["Texture.copper_golem"]
     }
   }
 }
