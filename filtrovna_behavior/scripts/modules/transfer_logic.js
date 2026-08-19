@@ -11,18 +11,33 @@ const DIRECTIONS = {
 };
 
 export function getRelativePos(block, direction) {
-  // block.permutation.getState may return a string or an object with .name/.toString.
-  let facingRaw;
-  try { facingRaw = block.permutation.getState("minecraft:cardinal_direction"); } catch { facingRaw = undefined; }
-  let facing = "south";
-  if (typeof facingRaw === "string") facing = facingRaw;
-  else if (facingRaw && typeof facingRaw === "object") {
-    if (typeof facingRaw.name === "string") facing = facingRaw.name;
-    else if (typeof facingRaw.toString === "function") facing = facingRaw.toString();
+  // Normalizuj cardinal_direction: může být string, object s .name, nebo StateEnum
+  let facing = "south"; // Fallback default
+  try {
+    const facingRaw = block.permutation.getState("minecraft:cardinal_direction");
+    if (typeof facingRaw === "string") {
+      facing = facingRaw;
+    } else if (facingRaw && typeof facingRaw === "object") {
+      // StateEnum nebo jiný objekt s .name nebo .toString()
+      if (typeof facingRaw.name === "string") {
+        facing = facingRaw.name;
+      } else if (typeof facingRaw.toString === "function") {
+        facing = facingRaw.toString();
+      }
+    }
+  } catch (e) {
+    console.warn(`[Filtrovna] getRelativePos: Neznámý facing state, fallback na 'south': ${e}`);
   }
-  if (!facing) facing = "south";
-  const vec = DIRECTIONS[facing]?.[direction];
+
+  // Validuj, že facing je v DIRECTIONS
+  if (!DIRECTIONS[facing]) {
+    console.warn(`[Filtrovna] getRelativePos: Neznámá orientace '${facing}', použiji 'south'`);
+    facing = "south";
+  }
+
+  const vec = DIRECTIONS[facing][direction];
   if (!vec) return undefined;
+
   return {
     x: block.location.x + vec.x,
     y: block.location.y + vec.y,
@@ -107,7 +122,7 @@ export function checkFilter(item, filterTypeIds, mode) {
   return filterTypeIds.includes(item.typeId);
 }
 
-function inferTags(typeId) {
+export function inferTags(typeId) {
   const tags = [];
   const id = typeId.replace("minecraft:", "");
   if (id.endsWith("_log") || id.endsWith("_planks") || id.includes("wood")) tags.push("logs");
@@ -122,26 +137,34 @@ function inferTags(typeId) {
 
 export function itemPriority(typeId) {
   const id = typeId.replace("minecraft:", "");
-  // Base priorities by material/key word
-  const table = [
-    { match: /netherite/, score: 100 },
-    { match: /diamond/, score: 90 },
-    { match: /emerald/, score: 80 },
-    { match: /gold/, score: 70 },
-    { match: /iron/, score: 60 },
-    { match: /redstone|lapis|quartz/, score: 50 },
-    { match: /copper/, score: 40 }
-  ];
-  let base = 10;
-  for (const entry of table) {
-    if (entry.match.test(id)) {
-      base = entry.score;
+  
+  // Tabulka priorit dle materiálu (čím vyšší, tím vzácnější).
+  // Struktura: materiál → base score; ore varianty jsou -5 od ingotu/bloku
+  const materialScores = {
+    netherite: 100,      // Nejvzácnější
+    diamond: 90,
+    emerald: 80,
+    gold: 70,
+    iron: 60,
+    lapis: 50,
+    redstone: 50,
+    quartz: 50,
+    copper: 40,
+    default: 10
+  };
+
+  let base = materialScores.default;
+  for (const [material, score] of Object.entries(materialScores)) {
+    if (material !== 'default' && id.includes(material)) {
+      base = score;
       break;
     }
   }
-  // Suffix adjustments: ores should be slightly lower than ingots/blocks of same material
+
+  // Ore suffix adjustment: ore je vždy o 5 bodů nižší než ingot/block
   if (id.endsWith("_ore")) {
     base = Math.max(0, base - 5);
   }
+
   return base;
 }

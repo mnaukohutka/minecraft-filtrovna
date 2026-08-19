@@ -50,6 +50,8 @@ function tickHopper(block, dimension) {
   }
 
   // Konfigurace režimu (strict vs priority) a limit pickupů za tick.
+  // - Strict: ignoruje nefiltrované položky
+  // - Priority: řadí filtrované dříve, ale zpracuje i nefiltrované (nižší priorita)
   const strictFilter = get("smart_hopper.strict_filter") === true;
   const maxPickups = Math.max(1, get("smart_hopper.max_pickups_per_tick") ?? 1);
 
@@ -63,16 +65,16 @@ function tickHopper(block, dimension) {
     });
   } catch { return; }
 
-  // Seřaď podle priority (filtrované a vzácnější první). Comparator používá čitelný score.
+  // Seřaď podle priority: filtrované položky dostanou +1000 bonus,
+  // pak seřaď podle value (vzácnosti). Priority mode tak zajistí
+  // že filtrované budou dříve, ale nefiltrované nebudou ignorovány.
   items.sort((a, b) => {
     const aItem = a.getComponent("minecraft:item")?.itemStack;
     const bItem = b.getComponent("minecraft:item")?.itemStack;
     if (!aItem || !bItem) return 0;
-    const aFiltered = filterIds.includes(aItem.typeId) ? 1000 : 0;
-    const bFiltered = filterIds.includes(bItem.typeId) ? 1000 : 0;
-    const aScore = aFiltered + getItemValue(aItem.typeId);
-    const bScore = bFiltered + getItemValue(bItem.typeId);
-    return bScore - aScore;
+    const aScore = (filterIds.includes(aItem.typeId) ? 1000 : 0) + getItemValue(aItem.typeId);
+    const bScore = (filterIds.includes(bItem.typeId) ? 1000 : 0) + getItemValue(bItem.typeId);
+    return bScore - aScore; // Vyšší skóre = dříve v poli
   });
 
   let pickups = 0;

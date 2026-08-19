@@ -73,24 +73,39 @@ export function removeInventoryForBlock(block) {
 }
 
 export function ensureInventoryForBlock(block) {
-  // Try to get existing container quickly.
+  // Pokus 1: Vrať existující kontejner (bez loggingu pro běžný případ).
   const existing = getBlockContainer(block);
   if (existing) return existing;
 
-  // Try a few immediate attempts to create the inventory entity and read its container.
+  // Pokus 2-4: Vytvoř a ověř inventář entitu.
   for (let attempt = 0; attempt < 3; attempt++) {
-    const entity = createInventoryForBlock(block);
-    if (!entity) continue;
     try {
+      const entity = createInventoryForBlock(block);
+      if (!entity) {
+        if (attempt === 0) console.warn(`[Filtrovna] ensureInventoryForBlock: create vrátil null`);
+        continue;
+      }
+
       const inv = entity.getComponent("minecraft:inventory");
-      if (inv?.container) return inv.container;
-      // Inventory component missing — remove and retry to avoid orphaned entities.
-      try { entity.remove(); } catch {}
+      if (inv?.container) {
+        return inv.container; // Úspěch!
+      }
+
+      // Komponenta chybí — entita je špatná, odstraň ji
+      try {
+        entity.remove();
+        if (attempt === 0) console.warn(`[Filtrovna] ensureInventoryForBlock: entita bez inventory komponenty`);
+      } catch {}
     } catch (e) {
-      try { entity.remove(); } catch {}
+      if (attempt === 0) console.warn(`[Filtrovna] ensureInventoryForBlock pokus ${attempt + 1} selhalo: ${e}`);
+      try { 
+        const entity = getInventoryEntity(block);
+        if (entity) entity.remove();
+      } catch {}
     }
   }
-  console.warn(`[Filtrovna] ensureInventoryForBlock: nelze vytvořit funkční inventář pro block ${block.typeId} na ${block.location.x},${block.location.y},${block.location.z}`);
+
+  console.warn(`[Filtrovna] ensureInventoryForBlock: nelze vytvořit funkční inventář pro ${block.typeId} na [${block.location.x},${block.location.y},${block.location.z}] po 3 pokusech`);
   return undefined;
 }
 

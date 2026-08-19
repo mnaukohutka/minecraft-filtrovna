@@ -97,6 +97,10 @@ export function getDefaultConfig() {
       fast_delivery_seconds: 10,
       logistics_master_golems: 5
     },
+    logging: {
+      level: 2,  // 0=DEBUG, 1=INFO, 2=WARN (default), 3=ERROR
+      module_levels: {}
+    },
     debug_mode: false,
     performance_monitor: false
   };
@@ -104,13 +108,51 @@ export function getDefaultConfig() {
 
 function validateConfig(cfg) {
   try {
+    // Filtr
     if (!cfg.filtr) cfg.filtr = {};
     cfg.filtr.batch_max_items = Math.max(1, Math.min(54, Number(cfg.filtr.batch_max_items) || 9));
     cfg.filtr.inspect_ticks = Math.max(1, Number(cfg.filtr.inspect_ticks) || 21);
+    cfg.filtr.light_emission_idle = Math.max(0, Math.min(15, Number(cfg.filtr.light_emission_idle) ?? 8));
+    cfg.filtr.energy_max = Math.max(1, Number(cfg.filtr.energy_max) || 100);
+    cfg.filtr.energy_per_tick_regen = Math.max(0, Number(cfg.filtr.energy_per_tick_regen) || 1);
+    cfg.filtr.energy_cost_per_item = Math.max(0, Number(cfg.filtr.energy_cost_per_item) || 2);
+    if (!["exact", "mod", "tag"].includes(cfg.filtr.default_match_mode)) cfg.filtr.default_match_mode = "exact";
+    if (!["group_by_type", "fill_any"].includes(cfg.filtr.batch_mode)) cfg.filtr.batch_mode = "group_by_type";
+    if (typeof cfg.filtr.enable_priority_queue !== "boolean") cfg.filtr.enable_priority_queue = true;
+    if (typeof cfg.filtr.enable_energy_system !== "boolean") cfg.filtr.enable_energy_system = true;
+    if (typeof cfg.filtr.enable_particles !== "boolean") cfg.filtr.enable_particles = true;
+    if (typeof cfg.filtr.batch_processing !== "boolean") cfg.filtr.batch_processing = true;
+
+    // Smart Hopper
     if (!cfg.smart_hopper) cfg.smart_hopper = {};
     cfg.smart_hopper.transfer_cooldown_ticks = Math.max(1, Number(cfg.smart_hopper.transfer_cooldown_ticks) || 8);
     cfg.smart_hopper.max_pickups_per_tick = Math.max(1, Math.min(64, Number(cfg.smart_hopper.max_pickups_per_tick) || 1));
-    if (typeof cfg.smart_hopper.strict_filter !== 'boolean') cfg.smart_hopper.strict_filter = false;
+    if (typeof cfg.smart_hopper.strict_filter !== "boolean") cfg.smart_hopper.strict_filter = false;
+
+    // Golem
+    if (!cfg.golem) cfg.golem = {};
+    cfg.golem.speed_multiplier = Math.max(0.1, Math.min(5, Number(cfg.golem.speed_multiplier) || 1.0));
+    cfg.golem.max_filtr_memory = Math.max(1, Number(cfg.golem.max_filtr_memory) || 15);
+    cfg.golem.max_storage_memory = Math.max(1, Number(cfg.golem.max_storage_memory) || 15);
+    cfg.golem.tick_interval = Math.max(1, Number(cfg.golem.tick_interval) || 20);
+
+    // Master
+    if (!cfg.master) cfg.master = {};
+    cfg.master.max_linked_filters = Math.max(1, Math.min(64, Number(cfg.master.max_linked_filters) || 8));
+
+    // Conveyor
+    if (!cfg.conveyor) cfg.conveyor = {};
+    cfg.conveyor.speed_blocks_per_second = Math.max(0.1, Number(cfg.conveyor.speed_blocks_per_second) || 1.0);
+
+    // Dock
+    if (!cfg.dock) cfg.dock = {};
+    cfg.dock.charge_rate_per_tick = Math.max(1, Number(cfg.dock.charge_rate_per_tick) || 5);
+
+    // Logging (nový)
+    if (!cfg.logging) cfg.logging = {};
+    cfg.logging.level = Math.max(0, Math.min(3, Number(cfg.logging.level) ?? 2)); // Default: WARN (2)
+    if (!cfg.logging.module_levels) cfg.logging.module_levels = {};
+
   } catch (e) {
     console.warn(`[Filtrovna] validateConfig selhalo: ${e}`);
   }
