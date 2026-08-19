@@ -54,9 +54,14 @@ export function createInventoryForBlock(block) {
     y: block.location.y + 0.5,
     z: block.location.z + 0.5
   };
-  const entity = block.dimension.spawnEntity(ENTITY_TYPE, loc);
-  setBlockData(block, KEYS.FILTR_ENTITY, entity.id);
-  return entity;
+  try {
+    const entity = block.dimension.spawnEntity(ENTITY_TYPE, loc);
+    setBlockData(block, KEYS.FILTR_ENTITY, entity.id);
+    return entity;
+  } catch (e) {
+    console.warn(`[Filtrovna] createInventoryForBlock spawn selhal: ${e}`);
+    return undefined;
+  }
 }
 
 export function removeInventoryForBlock(block) {
@@ -68,11 +73,25 @@ export function removeInventoryForBlock(block) {
 }
 
 export function ensureInventoryForBlock(block) {
+  // Try to get existing container quickly.
   const existing = getBlockContainer(block);
   if (existing) return existing;
-  const entity = createInventoryForBlock(block);
-  const inv = entity.getComponent("minecraft:inventory");
-  return inv?.container;
+
+  // Try a few immediate attempts to create the inventory entity and read its container.
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const entity = createInventoryForBlock(block);
+    if (!entity) continue;
+    try {
+      const inv = entity.getComponent("minecraft:inventory");
+      if (inv?.container) return inv.container;
+      // Inventory component missing — remove and retry to avoid orphaned entities.
+      try { entity.remove(); } catch {}
+    } catch (e) {
+      try { entity.remove(); } catch {}
+    }
+  }
+  console.warn(`[Filtrovna] ensureInventoryForBlock: nelze vytvořit funkční inventář pro block ${block.typeId} na ${block.location.x},${block.location.y},${block.location.z}`);
+  return undefined;
 }
 
 // Oprava po reloadu světa: odstranění osiřelých entit (bez bloku).

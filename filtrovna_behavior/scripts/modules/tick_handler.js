@@ -62,12 +62,22 @@ function processBlock(block) {
     candidates.sort((a, b) => itemPriority(b.item.typeId) - itemPriority(a.item.typeId));
   }
 
-  // Batch processing — vezmi až effectiveBatch předmětů stejného typu.
+  // Batch processing modes: 'group_by_type' (legacy) or 'fill_any' (take top N regardless of type).
+  const batchMode = getBlockData(block, KEYS.FILTR_BATCH_MODE, get("filtr.batch_mode") ?? "group_by_type");
   const batch = [];
-  const firstType = candidates[0].item.typeId;
-  for (const c of candidates) {
-    if (batch.length >= effectiveBatch) break;
-    if (c.item.typeId === firstType) batch.push(c);
+
+  if (batchMode === "fill_any") {
+    // Take the first effectiveBatch candidates after sorting (may be different types).
+    for (let i = 0; i < Math.min(effectiveBatch, candidates.length); i++) {
+      batch.push(candidates[i]);
+    }
+  } else {
+    // group_by_type (default): take up to effectiveBatch items of the same type as the first candidate
+    const firstType = candidates[0].item.typeId;
+    for (const c of candidates) {
+      if (batch.length >= effectiveBatch) break;
+      if (c.item.typeId === firstType) batch.push(c);
+    }
   }
 
   // Energie.

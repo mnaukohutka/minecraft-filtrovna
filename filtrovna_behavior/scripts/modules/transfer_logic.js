@@ -11,7 +11,16 @@ const DIRECTIONS = {
 };
 
 export function getRelativePos(block, direction) {
-  const facing = block.permutation.getState("minecraft:cardinal_direction") ?? "south";
+  // block.permutation.getState may return a string or an object with .name/.toString.
+  let facingRaw;
+  try { facingRaw = block.permutation.getState("minecraft:cardinal_direction"); } catch { facingRaw = undefined; }
+  let facing = "south";
+  if (typeof facingRaw === "string") facing = facingRaw;
+  else if (facingRaw && typeof facingRaw === "object") {
+    if (typeof facingRaw.name === "string") facing = facingRaw.name;
+    else if (typeof facingRaw.toString === "function") facing = facingRaw.toString();
+  }
+  if (!facing) facing = "south";
   const vec = DIRECTIONS[facing]?.[direction];
   if (!vec) return undefined;
   return {
@@ -113,13 +122,26 @@ function inferTags(typeId) {
 
 export function itemPriority(typeId) {
   const id = typeId.replace("minecraft:", "");
-  if (id.includes("netherite")) return 100;
-  if (id.includes("diamond")) return 90;
-  if (id.includes("emerald")) return 80;
-  if (id.includes("gold")) return 70;
-  if (id.includes("iron")) return 60;
-  if (id.includes("redstone") || id.includes("lapis") || id.includes("quartz")) return 50;
-  if (id.includes("copper")) return 40;
-  if (id.endsWith("_ore")) return 55;
-  return 10;
+  // Base priorities by material/key word
+  const table = [
+    { match: /netherite/, score: 100 },
+    { match: /diamond/, score: 90 },
+    { match: /emerald/, score: 80 },
+    { match: /gold/, score: 70 },
+    { match: /iron/, score: 60 },
+    { match: /redstone|lapis|quartz/, score: 50 },
+    { match: /copper/, score: 40 }
+  ];
+  let base = 10;
+  for (const entry of table) {
+    if (entry.match.test(id)) {
+      base = entry.score;
+      break;
+    }
+  }
+  // Suffix adjustments: ores should be slightly lower than ingots/blocks of same material
+  if (id.endsWith("_ore")) {
+    base = Math.max(0, base - 5);
+  }
+  return base;
 }

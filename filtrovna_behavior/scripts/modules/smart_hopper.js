@@ -49,6 +49,10 @@ function tickHopper(block, dimension) {
     if (f) filterIds.push(f.typeId);
   }
 
+  // Konfigurace režimu (strict vs priority) a limit pickupů za tick.
+  const strictFilter = get("smart_hopper.strict_filter") === true;
+  const maxPickups = Math.max(1, get("smart_hopper.max_pickups_per_tick") ?? 1);
+
   // Najdi item entity nad hopperem a seber prioritní.
   let items = [];
   try {
@@ -59,22 +63,30 @@ function tickHopper(block, dimension) {
     });
   } catch { return; }
 
-  // Seřaď podle priority (filtrované a vzácnější první).
+  // Seřaď podle priority (filtrované a vzácnější první). Comparator používá čitelný score.
   items.sort((a, b) => {
     const aItem = a.getComponent("minecraft:item")?.itemStack;
     const bItem = b.getComponent("minecraft:item")?.itemStack;
     if (!aItem || !bItem) return 0;
     const aFiltered = filterIds.includes(aItem.typeId) ? 1000 : 0;
     const bFiltered = filterIds.includes(bItem.typeId) ? 1000 : 0;
-    return (bFiltered + getItemValue(bItem.typeId)) - (aFiltered + getItemValue(aItem.typeId));
+    const aScore = aFiltered + getItemValue(aItem.typeId);
+    const bScore = bFiltered + getItemValue(bItem.typeId);
+    return bScore - aScore;
   });
 
+  let pickups = 0;
   for (const itemEntity of items) {
+    if (pickups >= maxPickups) break;
     const itemComp = itemEntity.getComponent("minecraft:item");
     if (!itemComp?.itemStack) continue;
     const item = itemComp.itemStack;
-    // Pokud je filtr a předmět nepasuje, přeskoč.
-    if (filterIds.length > 0 && !filterIds.includes(item.typeId)) continue;
+
+    // Strict mode: pokud filtr obsahuje něco a item není v něm → přeskočit.
+    if (strictFilter && filterIds.length > 0 && !filterIds.includes(item.typeId)) continue;
+
+    // Priority mode: pokud není v filtru, pokračovat (má nižší prioritu díky comparatoru).
+
     // Vlož do bufferu (slot 5+).
     let placed = false;
     for (let i = FILTER_SLOTS; i < container.size; i++) {
@@ -93,8 +105,8 @@ function tickHopper(block, dimension) {
     }
     if (placed) {
       try { itemEntity.remove(); } catch {}
+      pickups += 1;
     }
-    break;
   }
 
   // Přenos dolů do kontejneru (vanilla blok inventář existuje jen u vanilla bloků).

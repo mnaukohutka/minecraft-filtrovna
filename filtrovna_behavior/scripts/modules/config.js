@@ -18,7 +18,8 @@ export function loadConfig() {
   try {
     const raw = world.getDynamicProperty("filtrovna:config");
     if (typeof raw === "string") {
-      CONFIG = JSON.parse(raw);
+      const parsed = JSON.parse(raw);
+      CONFIG = deepMerge(getDefaultConfig(), parsed);
     }
   } catch (e) {
     console.warn(`[Filtrovna] Konfiguraci nelze načíst: ${e}`);
@@ -26,6 +27,7 @@ export function loadConfig() {
   if (!CONFIG) {
     CONFIG = getDefaultConfig();
   }
+  validateConfig(CONFIG);
 }
 
 export function getDefaultConfig() {
@@ -46,6 +48,7 @@ export function getDefaultConfig() {
       inspect_ticks: 21,
       batch_processing: true,
       batch_max_items: 9,
+      batch_mode: "group_by_type",
       light_emission_idle: 8,
       default_match_mode: "exact",
       enable_priority_queue: true,
@@ -65,7 +68,9 @@ export function getDefaultConfig() {
     },
     smart_hopper: {
       transfer_cooldown_ticks: 8,
-      default_count_mode: 0
+      default_count_mode: 0,
+      max_pickups_per_tick: 1,
+      strict_filter: false
     },
     scanner: {
       default_signal_strength: 15
@@ -97,8 +102,23 @@ export function getDefaultConfig() {
   };
 }
 
+function validateConfig(cfg) {
+  try {
+    if (!cfg.filtr) cfg.filtr = {};
+    cfg.filtr.batch_max_items = Math.max(1, Math.min(54, Number(cfg.filtr.batch_max_items) || 9));
+    cfg.filtr.inspect_ticks = Math.max(1, Number(cfg.filtr.inspect_ticks) || 21);
+    if (!cfg.smart_hopper) cfg.smart_hopper = {};
+    cfg.smart_hopper.transfer_cooldown_ticks = Math.max(1, Number(cfg.smart_hopper.transfer_cooldown_ticks) || 8);
+    cfg.smart_hopper.max_pickups_per_tick = Math.max(1, Math.min(64, Number(cfg.smart_hopper.max_pickups_per_tick) || 1));
+    if (typeof cfg.smart_hopper.strict_filter !== 'boolean') cfg.smart_hopper.strict_filter = false;
+  } catch (e) {
+    console.warn(`[Filtrovna] validateConfig selhalo: ${e}`);
+  }
+}
+
 export function get(path) {
   if (!CONFIG) loadConfig();
+  if (OVERRIDES.has(path)) return OVERRIDES.get(path);
   const parts = path.split(".");
   let cur = CONFIG;
   for (const p of parts) {
